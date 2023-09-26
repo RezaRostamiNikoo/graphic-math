@@ -1,0 +1,33 @@
+{
+  "name": "graphic-math",
+  "version": "1.0.0",
+  "description": "a library to deal with all mathematic need in computer graphic",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rezarostaminikoo/graphic-math.git"
+  },
+  "keywords": [
+    "math",
+    "graphic",
+    "computer",
+    "graphic",
+    "vector",
+    "matrix",
+    "triangulation"
+  ],
+  "author": "Reza Rostaminikoo <RezaRostaminikoo@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rezarostaminikoo/graphic-math/issues"
+  },
+  "homepage": "https://github.com/rezarostaminikoo/graphic-math#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1"
+  }
+}
