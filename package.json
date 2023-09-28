@@ -4,6 +4,7 @@
   "description": "a library to deal with all mathematic need in computer graphic",
   "main": "src/index.ts",
   "scripts": {
+    "build": "webpack",
     "test": "jest"
   },
   "repository": {
