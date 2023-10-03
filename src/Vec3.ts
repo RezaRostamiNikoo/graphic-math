@@ -1,10 +1,11 @@
 
+import Mat3 from "./Mat3";
 import Mat4 from "./Mat4";
 import { Vec2 } from "./Vec2";
 
 
 export default class Vec3 {
-    isVector3: boolean = true;
+    isVec3: boolean = true;
 
     /** first component of the vector */
     x: number;
@@ -287,53 +288,68 @@ export default class Vec3 {
 
 
 
-    // applyEuler(euler: Euler): Vector3 {
+    // applyEuler(euler: Euler): Vec3 {
 
     //     return this.applyQuaternion(Quaternion.setFromEuler(euler));
 
     // }
 
-    // applyAxisAngle(axis: Vector3, angle:number): Vector3 {
+    // applyAxisAngle(axis: Vec3, angle:number): Vec3 {
 
     //     return this.applyQuaternion(Quaternion.setFromAxisAngle(axis, angle));
 
     // }
 
-    // applyMatrix3(m: Mat3x3): Vector3 {
+    /**
+     * multiply to given matrix 
+     * @example
+     * (this vector) * mat
+     *              | a11 a12 a13 |
+     * (x, y, z) *  | a21 a22 a23 |
+     *              | a31 a32 a33 |
+     * @param {Mat3} mat 
+     * @returns {Vec3}
+     */
+    applyMat3(mat: Mat3): Vec3 {
 
-    //     const x = this.x, y = this.y, z = this.z;
-    //     const e = m.elements;
+        const x = this.x, y = this.y, z = this.z;
+        const e = mat.elements;
 
-    //     this.x = e[0] * x + e[3] * y + e[6] * z;
-    //     this.y = e[1] * x + e[4] * y + e[7] * z;
-    //     this.z = e[2] * x + e[5] * y + e[8] * z;
+        this.x = e[0] * x + e[3] * y + e[6] * z;
+        this.y = e[1] * x + e[4] * y + e[7] * z;
+        this.z = e[2] * x + e[5] * y + e[8] * z;
 
-    //     return this;
+        return this;
 
-    // }
+    }
 
-    // applyNormalMatrix(m: Mat3x3): Vector3 {
+    /**
+     * multiply this vector to the given matrix
+     * @example
+     * (this vector) * mat
+     *                | a11 a12 a13 a14 |
+     * (x, y, z, 1) * | a21 a22 a23 a24 |
+     *                | a31 a32 a33 a34 |
+     *                | a41 a42 a43 a44 |
+     * @param {Mat4} mat 
+     * @returns {Vec3}
+     */
+    applyMat4(mat: Mat4): Vec3 {
 
-    //     return this.applyMatrix3(m).normalize();
+        const x = this.x, y = this.y, z = this.z;
+        const e = mat.elements;
 
-    // }
+        const w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
 
-    // applyMat4x4(m: Mat4x4): Vector3 {
+        this.x = (e[0] * x + e[4] * y + e[8] * z + e[12]) * w;
+        this.y = (e[1] * x + e[5] * y + e[9] * z + e[13]) * w;
+        this.z = (e[2] * x + e[6] * y + e[10] * z + e[14]) * w;
 
-    //     const x = this.x, y = this.y, z = this.z;
-    //     const e = m.elements;
+        return this;
 
-    //     const w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
+    }
 
-    //     this.x = (e[0] * x + e[4] * y + e[8] * z + e[12]) * w;
-    //     this.y = (e[1] * x + e[5] * y + e[9] * z + e[13]) * w;
-    //     this.z = (e[2] * x + e[6] * y + e[10] * z + e[14]) * w;
-
-    //     return this;
-
-    // }
-
-    // applyQuaternion(q: Quaternion): Vector3 {
+    // applyQuaternion(q: Quaternion): Vec3 {
 
     //     const x = this.x, y = this.y, z = this.z;
     //     const qx = q.x, qy = q.y, qz = q.z, qw = q.w;
@@ -355,19 +371,19 @@ export default class Vec3 {
 
     // }
 
-    // project(camera): Vector3 {
+    // project(camera): Vec3 {
 
     //     return this.applyMatrix4(camera.matrixWorldInverse).applyMatrix4(camera.projectionMatrix);
 
     // }
 
-    // unproject(camera): Vector3 {
+    // unproject(camera): Vec3 {
 
     //     return this.applyMatrix4(camera.projectionMatrixInverse).applyMatrix4(camera.matrixWorld);
 
     // }
 
-    // transformDirection(m: Mat4x4): Vector3 {
+    // transformDirection(m: Mat4): Vec3 {
 
     //     // input: THREE.Matrix4 affine matrix
     //     // vector interpreted as a direction
@@ -401,7 +417,7 @@ export default class Vec3 {
     /**
      * divide vector's components with an scalar value
      * @param {number} scalar number to be divided to the vector
-     * @returns {Vec3} divided vector3
+     * @returns {Vec3} divided Vec3
      */
     divideScalar(scalar: number): Vec3 { return this.multiplyScalar(1 / scalar) }
 
@@ -610,15 +626,15 @@ export default class Vec3 {
      * this method rotates a vector toward another vector 
      * @param v the second vector that we want to rotate vector toward it
      * @param t the alpha/theta and t is between 0 and 1
-     * @returns rotated Vector3
+     * @returns rotated Vec3
      */
-    // angleLerp(v: Vector3, t: number): Vector3 {
-    //     t = Math.max(0, Math.min(t, 0, 1))
-    //     const x = this.clone().normalize();
-    //     const z = x.cross(v).normalize();
-    //     const y = z.cross(x).normalize();
-    //     return this.applyMat4(Mat4.makeRotationAxis(z, x.angleTo(v) * t));
-    // }
+    angleLerp(v: Vec3, t: number): Vec3 {
+        t = Math.max(0, Math.min(t, 0, 1))
+        const x = this.clone().normalize();
+        const z = x.cross(v).normalize();
+        const y = z.cross(x).normalize();
+        return this.applyMat4(Mat4.makeRotationAxis(z, x.angleTo(v) * t));
+    }
 
     /**
      * calculates cross products
@@ -661,19 +677,24 @@ export default class Vec3 {
 
     }
 
-    // angleTo(v: Vector3): number {
+    /**
+     * computes the angle between the vector and given vector
+     * @param {Vec3} vec 
+     * @returns {number}
+     */
+    angleTo(vec: Vec3): number {
 
-    //     const denominator = Math.sqrt(this.lengthSq() * v.lengthSq());
+        const denominator = Math.sqrt(this.lengthSq() * vec.lengthSq());
 
-    //     if (denominator === 0) return Math.PI / 2;
+        if (denominator === 0) return Math.PI / 2;
 
-    //     const theta = this.dot(v) / denominator;
+        const theta = this.dot(vec) / denominator;
 
-    //     // clamp, to handle numerical problems
+        // clamp, to handle numerical problems
 
-    //     return Math.acos(MathUtils.clamp(theta, - 1, 1));
+        return Math.acos(Math.max(-1, Math.min(theta, 1)))
 
-    // }
+    }
 
     /**
      * returns distance of two vector's end (more like it calculates the distance of two points)
@@ -706,62 +727,18 @@ export default class Vec3 {
 
     }
 
-    // setFromSpherical(s): Vector3 {
+    setFromSpherical(s): Vec3 {
+        return this.copy(Vec3.setFromSphericalCoords(s.radius, s.phi, s.theta))
+    }
 
-    //     return this.setFromSphericalCoords(s.radius, s.phi, s.theta);
+    setFromCylindrical(c): Vec3 {
 
-    // }
+        return this.copy(Vec3.setFromCylindricalCoords(c.radius, c.theta, c.y))
 
-
-
-    // setFromCylindrical(c): Vector3 {
-
-    //     return this.setFromCylindricalCoords(c.radius, c.theta, c.y);
-
-    // }
+    }
 
 
-
-
-    // setFromMatrixPosition(m: Mat4x4): Vector3 {
-
-    //     const e = m.elements;
-
-    //     this.x = e[12];
-    //     this.y = e[13];
-    //     this.z = e[14];
-
-    //     return this;
-
-    // }
-
-    // setFromMatrixScale(m: Mat4x4): Vector3 {
-
-    //     const sx = this.setFromMatrixColumn(m, 0).length();
-    //     const sy = this.setFromMatrixColumn(m, 1).length();
-    //     const sz = this.setFromMatrixColumn(m, 2).length();
-
-    //     this.x = sx;
-    //     this.y = sy;
-    //     this.z = sz;
-
-    //     return this;
-
-    // }
-
-    // setFromMatrixColumn(m: Mat4x4, index: number): Vector3 {
-
-    //     return this.fromArray(m.elements, index * 4);
-
-    // }
-
-    // setFromMatrix3Column(m: Mat4x4, index: number): Vector3 {
-
-    //     return this.fromArray(m.elements, index * 3);
-
-    // }
-
-    // setFromEuler(e: Euler): Vector3 {
+    // setFromEuler(e: Euler): Vec3 {
 
     //     this.x = e._x;
     //     this.y = e._y;
@@ -771,7 +748,7 @@ export default class Vec3 {
 
     // }
 
-    // setFromColor(c): Vector3 {
+    // setFromColor(c): Vec3 {
 
     //     this.x = c.r;
     //     this.y = c.g;
@@ -782,7 +759,7 @@ export default class Vec3 {
     // }
 
     /**
-     * compares the current vector with the given vector3
+     * compares the current vector with the given Vec3
      * @param {Vec3} vec 
      * @returns {boolean}
      */
@@ -795,7 +772,7 @@ export default class Vec3 {
     /**
      * return an array includes all the components of the vector in a row
      * @example 
-     * new Vector3(4,5,6).toArray() => [4,5,6]
+     * new Vec3(4,5,6).toArray() => [4,5,6]
      * 
      * @returns {Array}
      */
@@ -804,7 +781,7 @@ export default class Vec3 {
     /**
      * return an object 
      * @example
-     * new Vector3(4,5,6).toArray() => { x:4, y:5, z:6 }
+     * new Vec3(4,5,6).toArray() => { x:4, y:5, z:6 }
      * 
      * @returns {object}
      */
@@ -813,11 +790,11 @@ export default class Vec3 {
     /**
      * return a text 
      * @example
-     * new Vector3(4,5,6).toArray() => "Vector3 => x: 4, y: 5, z: 6"
+     * new Vec3(4,5,6).toArray() => "Vec3 => x: 4, y: 5, z: 6"
      * 
      * @returns string
      */
-    toString(): string { return `Vector3 => x: ${this.x}, y: ${this.y}, z: ${this.z}` }
+    toString(): string { return `Vec3 => x: ${this.x}, y: ${this.y}, z: ${this.z}` }
 
     // fromBufferAttribute(attribute, index) {
 
@@ -981,7 +958,7 @@ export default class Vec3 {
     /**
      * gets an array and return a vector from array items started from offset in index
      * @example
-     * Vector3.fromArray([5,6,7]) 
+     * Vec3.fromArray([5,6,7]) 
      * @param {Array<number>} array 
      * @param {number} offset 
      * @returns {Vec3}
@@ -1009,6 +986,55 @@ export default class Vec3 {
 
         return result;
 
+    }
+
+
+    /**
+     * extracts the position components of given matrix as a vector
+     * @param {Mat4} mat 
+     * @returns {Vec3}
+     */
+    public static setFromMatrixPosition(mat: Mat4): Vec3 {
+        const e = mat.elements;
+        return new Vec3(
+            e[12],
+            e[13],
+            e[14],
+        )
+    }
+
+    /**
+     * extracts scale factors from given matrix 4x4
+     * @param {Mat4} mat
+     * @returns {Vec3}
+     */
+    public static setFromMat4Scale(mat: Mat4): Vec3 {
+
+        const sx = Vec3.setFromMat4Row(mat, 0).length();
+        const sy = Vec3.setFromMat4Row(mat, 1).length();
+        const sz = Vec3.setFromMat4Row(mat, 2).length();
+
+        return new Vec3(sx, sy, sz)
+    }
+
+    /**
+     * extracts a row of given matrix 4x4 as a vector
+     * @param {Mat4} mat 
+     * @param index 
+     * @returns {Vec3}
+     */
+    public static setFromMat4Row(mat: Mat4, index: number): Vec3 {
+        return Vec3.fromArray(mat.elements, index * 4);
+    }
+
+    /**
+     * extracts a row from given matrix 3x3
+     * @param {Mat3} mat 
+     * @param {number} index 
+     * @returns {Vec3}
+     */
+    public static setFromMatrix3Column(mat: Mat3, index: number): Vec3 {
+        return Vec3.fromArray(mat.elements, index * 3);
     }
 }
 
