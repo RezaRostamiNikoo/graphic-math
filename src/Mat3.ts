@@ -3,6 +3,8 @@ this class is from threejs class (Matrix3)
 the link is: https://github.com/mrdoob/three.js/blob/dev/src/math/Matrix3.js
 */
 
+import Vec2 from "./Vec2";
+
 // import { CoorSys2, Vector2 } from ".";
 
 /**
@@ -181,17 +183,34 @@ export default class Mat3 {
     }
 
 
+    /**
+     * 
+     * @param sx 
+     * @param sy 
+     * @returns 
+     */
     scale(sx: number, sy: number): Mat3 {
         return this.premultiply(Mat3.makeScale(sx, sy));
     }
 
+    /**
+     * 
+     * @param theta 
+     * @returns 
+     */
     rotate(theta: number): Mat3 {
         return this.premultiply(Mat3.makeRotation(theta));
     }
 
-    // translate(v: Vector2): Mat3x3 {
-    //     return this.premultiply(Mat3x3.makeTranslation(v));
-    // }
+    /**
+     * 
+     * @param dx 
+     * @param dy 
+     * @returns {Mat3}
+     */
+    translate(dx: number, dy: number): Mat3 {
+        return this.premultiply(Mat3.makeTranslation(dx, dy));
+    }
 
     /**
      * return a copy of the matrix
@@ -266,16 +285,22 @@ export default class Mat3 {
 
     }
 
-
-    // for 2D Transforms
-
-    // public static makeTranslation(v: Vector2) {
-    //     return new Mat3x3().set(
-    //         1, 0, 0,
-    //         0, 1, 0,
-    //         v.x, v.y, 1
-    //     );
-    // }
+    /**
+     * returns a translate matrix in 2D space
+     * @example
+     * | 1  0  0 |
+     * | 0  1  0 |
+     * |dx dy  1 |
+     * @param {Vec2} vec
+     * @returns {Mat3}
+     */
+    public static makeTranslation(dx: number, dy: number) {
+        return new Mat3().set(
+            1, 0, 0,
+            0, 1, 0,
+            dx, dy, 1
+        );
+    }
 
     /**
      * this method creates a Rotation Matrix
@@ -299,6 +324,12 @@ export default class Mat3 {
 
     }
 
+    /**
+     * 
+     * @param x 
+     * @param y 
+     * @returns 
+     */
     public static makeScale(x: number, y: number) {
         const resultMat = new Mat3();
         resultMat.set(
@@ -309,6 +340,10 @@ export default class Mat3 {
         return resultMat;
     }
 
+    /**
+     * 
+     * @returns 
+     */
     public static identity(): Mat3 {
         const resultMat = new Mat3();
         resultMat.set(
@@ -319,17 +354,23 @@ export default class Mat3 {
         return resultMat;
     }
 
-    // public static makeBasis(xAxis: Vector2, yAxis: Vector2,): Mat3x3 {
-    //     return new Mat3x3().set(
-    //         xAxis.x, xAxis.y, 0,
-    //         yAxis.x, yAxis.y, 0,
-    //         0, 0, 1
-    //     );
-    // }
+    /**
+     * 
+     * @param xAxis 
+     * @param yAxis 
+     * @returns 
+     */
+    public static makeBasis(xAxis: Vec2, yAxis: Vec2,): Mat3 {
+        return new Mat3().set(
+            xAxis.x, xAxis.y, 0,
+            yAxis.x, yAxis.y, 0,
+            0, 0, 1
+        );
+    }
 
     // public static makeTransformMatrixFromCoorSys(coor: CoorSys2) {
     //     return Mat3x3.makeBasis(coor.u, coor.v).translate(coor.origin);
     // }
 }
 
-export { Mat3 as Mat3x3 }
+export { Mat3 }
