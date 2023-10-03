@@ -4,8 +4,9 @@
  */
 
 import Mat3 from "./Mat3";
+import Vec3 from "./Vec3";
 
-// import { Quaternion, Mat3x3, Vector3, Euler } from ".";
+// import { Quaternion, Mat3x3, Vec3, Euler } from ".";
 // import { WebGLCoordinateSystem, WebGPUCoordinateSystem } from '../constants';
 
 
@@ -89,65 +90,61 @@ export default class Mat4 {
         return this;
     }
 
-    // extractBasis(xAxis: Vector3, yAxis: Vector3, zAxis: Vector3) {
+    /**
+     * return a matrix which looks at the givek target from eye poit 
+     * @param {Vec3} eye 
+     * @param {Vec3}target 
+     * @param {Vec3} up 
+     * @returns 
+     */
+    lookAt(eye: Vec3, target: Vec3, up: Vec3) {
 
-    //     xAxis.setFromMatrixColumn(this, 0);
-    //     yAxis.setFromMatrixColumn(this, 1);
-    //     zAxis.setFromMatrixColumn(this, 2);
+        const te = this.elements;
+        let _x = new Vec3();
+        let _y = new Vec3();
+        let _z = new Vec3();
+        _z = Vec3.subVectors(eye, target);
 
-    //     return this;
+        if (_z.lengthSq() === 0) {
 
-    // }
+            // eye and target are in the same position
 
+            _z.z = 1;
 
-    // lookAt(eye: Vector3, target: Vector3, up: Vector3) {
+        }
 
-    //     const te = this.elements;
-    //     let _x = new Vector3();
-    //     let _y = new Vector3();
-    //     let _z = new Vector3();
-    //     _z = Vector3.subVectors(eye, target);
+        _z.normalize();
+        _x = Vec3.crossVectors(up, _z);
 
-    //     if (_z.lengthSq() === 0) {
+        if (_x.lengthSq() === 0) {
 
-    //         // eye and target are in the same position
+            // up and z are parallel
 
-    //         _z.z = 1;
+            if (Math.abs(up.z) === 1) {
 
-    //     }
+                _z.x += 0.0001;
 
-    //     _z.normalize();
-    //     _x = Vector3.crossVectors(up, _z);
+            } else {
 
-    //     if (_x.lengthSq() === 0) {
+                _z.z += 0.0001;
 
-    //         // up and z are parallel
+            }
 
-    //         if (Math.abs(up.z) === 1) {
+            _z.normalize();
+            _x = Vec3.crossVectors(up, _z);
 
-    //             _z.x += 0.0001;
+        }
 
-    //         } else {
+        _x.normalize();
+        _y = Vec3.crossVectors(_z, _x);
 
-    //             _z.z += 0.0001;
+        te[0] = _x.x; te[1] = _x.y; te[2] = _x.z;
+        te[4] = _y.x; te[5] = _y.y; te[6] = _y.z;
+        te[8] = _z.x; te[9] = _z.y; te[10] = _z.z;
 
-    //         }
+        return this;
 
-    //         _z.normalize();
-    //         _x = Vector3.crossVectors(up, _z);
-
-    //     }
-
-    //     _x.normalize();
-    //     _y = Vector3.crossVectors(_z, _x);
-
-    //     te[0] = _x.x; te[1] = _y.x; te[2] = _z.x;
-    //     te[4] = _x.y; te[5] = _y.y; te[6] = _z.y;
-    //     te[8] = _x.z; te[9] = _y.z; te[10] = _z.z;
-
-    //     return this;
-
-    // }
+    }
 
     /**
      * multiplys the matrix to the given matrix
@@ -313,7 +310,7 @@ export default class Mat4 {
 
     }
 
-    // compose(position: Vector3, quaternion: Quaternion, scale: Vector3) {
+    // compose(position: Vec3, quaternion: Quaternion, scale: Vec3) {
 
     //     const te = this.elements;
 
@@ -349,10 +346,10 @@ export default class Mat4 {
 
     // }
 
-    // decompose(position: Vector3, quaternion: Quaternion, scale: Vector3) {
+    // decompose(position: Vec3, quaternion: Quaternion, scale: Vec3) {
 
     //     const te = this.elements;
-    //     const _v1 = new Vector3();
+    //     const _v1 = new Vec3();
 
     //     let sx = _v1.set(te[0], te[1], te[2]).length();
     //     const sy = _v1.set(te[4], te[5], te[6]).length();
@@ -463,7 +460,7 @@ export default class Mat4 {
      * @returns {Mat4}
      */
     setPosition(dx: number, dy: number, dz: number) {
-        //TODO: implement another overloading for vector3
+        //TODO: implement another overloading for Vec3
         const te = this.elements;
 
         te[12] = dx;
@@ -737,26 +734,26 @@ export default class Mat4 {
      * this rotation function is based on http://www.gamedev.net/reference/articles/article1199.asp 
      * @param axis the desired Axis in the space you want to rotate object around
      * @param angle the amount of angle to rotate - Radian
-     * @returns Mat4x4
+     * @returns {Mat4}
      */
-    // public static makeRotationAxis(axis: Vector3, angle: number): Mat4x4 {
-    //     // Based on http://www.gamedev.net/reference/articles/article1199.asp
+    public static makeRotationAxis(axis: Vec3, angle: number): Mat4 {
+        // Based on http://www.gamedev.net/reference/articles/article1199.asp
 
-    //     const c = Math.cos(angle);
-    //     const s = Math.sin(angle);
-    //     const t = 1 - c;
-    //     const x = axis.x, y = axis.y, z = axis.z;
-    //     const tx = t * x, ty = t * y;
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        const t = 1 - c;
+        const x = axis.x, y = axis.y, z = axis.z;
+        const tx = t * x, ty = t * y;
 
-    //     return new Mat4x4().set(
+        return new Mat4().set(
 
-    //         tx * x + c, tx * y + s * z, tx * z - s * y, 0,
-    //         tx * y - s * z, ty * y + c, ty * z + s * x, 0,
-    //         tx * z + s * y, ty * z - s * x, t * z * z + c, 0,
-    //         0, 0, 0, 1
+            tx * x + c, tx * y + s * z, tx * z - s * y, 0,
+            tx * y - s * z, ty * y + c, ty * z + s * x, 0,
+            tx * z + s * y, ty * z - s * x, t * z * z + c, 0,
+            0, 0, 0, 1
 
-    //     );
-    // }
+        );
+    }
 
     /**
      * returns scale mat4 to scale points or ... 
@@ -799,7 +796,7 @@ export default class Mat4 {
     }
 
     // public static makePerspective(left: number, right: number, top: number, bottom: number, near: number, far: number, coordinateSystem = WebGLCoordinateSystem) {
-    //     const resultMat = new Mat4x4();
+    //     const resultMat = new Mat4();
     //     const te = resultMat.elements;
     //     const x = 2 * near / (right - left);
     //     const y = 2 * near / (top - bottom);
@@ -835,7 +832,7 @@ export default class Mat4 {
     // }
 
     // public static makeOrthographic(left: number, right: number, top: number, bottom: number, near: number, far: number, coordinateSystem = WebGLCoordinateSystem) {
-    //     const resultMat = new Mat4x4();
+    //     const resultMat = new Mat4();
     //     const te = resultMat.elements;
     //     const w = 1.0 / (right - left);
     //     const h = 1.0 / (top - bottom);
@@ -865,17 +862,24 @@ export default class Mat4 {
 
     // }
 
-    // public static makeBasis(xAxis: Vector3, yAxis: Vector3, zAxis: Vector3): Mat4x4 {
-    //     return new Mat4x4().set(
-    //         xAxis.x, xAxis.y, xAxis.z, 0,
-    //         yAxis.x, yAxis.y, yAxis.z, 0,
-    //         zAxis.x, zAxis.y, zAxis.z, 0,
-    //         0, 0, 0, 1
-    //     );
-    // }
+    /**
+     * return a matrix generated with axises
+     * @param {Vec3} xAxis 
+     * @param {Vec3} yAxis 
+     * @param {Vec3} zAxis 
+     * @returns {Mat4}
+     */
+    public static makeBasis(xAxis: Vec3, yAxis: Vec3, zAxis: Vec3): Mat4 {
+        return new Mat4().set(
+            xAxis.x, xAxis.y, xAxis.z, 0,
+            yAxis.x, yAxis.y, yAxis.z, 0,
+            zAxis.x, zAxis.y, zAxis.z, 0,
+            0, 0, 0, 1
+        );
+    }
 
     // public static makeRotationFromEuler(euler: Euler) {
-    //     const resultMat = new Mat4x4();
+    //     const resultMat = new Mat4();
     //     const te = resultMat.elements;
 
     //     const x = euler.x, y = euler.y, z = euler.z;
@@ -997,7 +1001,7 @@ export default class Mat4 {
     // }
 
     // public static makeRotationFromQuaternion(q: Quaternion) {
-    //     return new Mat4x4().compose(new Vector3(), q, new Vector3(1, 1, 1));
+    //     return new Mat4().compose(new Vec3(), q, new Vec3(1, 1, 1));
     // }
 
 
