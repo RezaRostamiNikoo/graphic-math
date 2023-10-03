@@ -622,6 +622,7 @@ export default class Vec2 {
             array[offset + 1]
         )
     }
+
 }
 
 export { Vec2 }
