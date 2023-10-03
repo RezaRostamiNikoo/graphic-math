@@ -889,6 +889,8 @@ export default class Vec3 {
 
     /**
      * it subtracts two vector together
+     * @example
+     * a - b => ( a.x - b.x , a.y - b.y , a.z - b.z )
      * @param {Vec3} a  
      * @param {Vec3} b 
      * @returns {Vec3} 
