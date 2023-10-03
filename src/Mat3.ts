@@ -58,6 +58,8 @@ export default class Mat3 {
 
     /**
      * multiply the current mat to the given mat
+     * @example
+     * this * mat
      * @param {Mat3} m 
      * @returns 
      */
@@ -194,22 +196,25 @@ export default class Mat3 {
     }
 
     /**
-     * 
-     * @param theta 
-     * @returns 
+     * rotates matrix (Axises) clockwise or in other word it rotates points counter clockwise
+     * @param {number} theta angle in radian
+     * @returns {Mat3}
      */
     rotate(theta: number): Mat3 {
-        return this.premultiply(Mat3.makeRotation(theta));
+        return this.multiplyTo(Mat3.makeRotation(theta));
     }
 
     /**
-     * 
+     * translates the matrix (axises) in reverse or in other word it translate points 
+     * @example 
+     * translate(2,2) => it translate the matrix (axises) by -2 and -2 unit
+     * and it translate points +2 an +2 unit
      * @param dx 
      * @param dy 
      * @returns {Mat3}
      */
     translate(dx: number, dy: number): Mat3 {
-        return this.premultiply(Mat3.makeTranslation(dx, dy));
+        return this.multiplyTo(Mat3.makeTranslation(dx, dy));
     }
 
     /**
@@ -315,8 +320,8 @@ export default class Mat3 {
         const s = Math.sin(theta);
 
         resultMat.set(
-            +c, -s, 0,
-            +s, +c, 0,
+            +c, +s, 0,
+            -s, +c, 0,
             0, 0, 1
         );
 
@@ -341,8 +346,12 @@ export default class Mat3 {
     }
 
     /**
-     * 
-     * @returns 
+     * return a identity matrix
+     * @example
+     * | 1 0 0 |
+     * | 0 1 0 |
+     * | 0 0 1 |
+     * @returns {Mat3}
      */
     public static identity(): Mat3 {
         const resultMat = new Mat3();
@@ -355,10 +364,16 @@ export default class Mat3 {
     }
 
     /**
-     * 
-     * @param xAxis 
-     * @param yAxis 
-     * @returns 
+     * return a transformation matrix with two defined axis
+     * @example
+     * a = xAxis
+     * b = yAxis
+     * | a.x a.y   0 |
+     * | b.x b.y   0 |
+     * |   0   0   1 |
+     * @param {Vec2} xAxis it should be normalized
+     * @param {Vec2} yAxis it should be normalized
+     * @returns {Mat3}
      */
     public static makeBasis(xAxis: Vec2, yAxis: Vec2,): Mat3 {
         return new Mat3().set(
