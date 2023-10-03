@@ -517,10 +517,7 @@ export default class Mat4 {
      * @param {number} theta in radian - this angle means that rotates the matrix counter clockwise
      * @returns {Mat4}
      */
-    rotateX(theta: number): Mat4 {
-        this.multiplyTo(Mat4.makeRotationX(theta));
-        return this;
-    }
+    rotateX(theta: number): Mat4 { return this.multiplyTo(Mat4.makeRotationX(theta)) }
 
     /**
      * it rotates the matrix `counter clockwise`
