@@ -529,10 +529,7 @@ export default class Mat4 {
      * @param {number} theta in radian - this angle means that rotates the matrix counter clockwise
      * @returns {Mat4}
      */
-    rotateY(theta: number): Mat4 {
-        this.premultiply(Mat4.makeRotationY(theta));
-        return this;
-    }
+    rotateY(theta: number): Mat4 { return this.multiplyTo(Mat4.makeRotationY(theta)) }
 
     /**
      * it rotates the matrix `counter clockwise`
@@ -729,7 +726,7 @@ export default class Mat4 {
     /**
      * this method rotate the matrix in an amount of "angle" around "axis".
      * this rotation function is based on http://www.gamedev.net/reference/articles/article1199.asp 
-     * @param axis the desired Axis in the space you want to rotate object around
+     * @param axis the desired Axis in the space you want to rotate object around - it should be `normalized`
      * @param angle the amount of angle to rotate - Radian
      * @returns {Mat4}
      */
@@ -860,7 +857,26 @@ export default class Mat4 {
     // }
 
     /**
-     * return a matrix generated with axises
+     * return a matrix generated with axises. this axis are the local axises defined by global axises' normals.
+     * It means that this matrix is used to convert local coordinate to global coordinates.
+     * @example
+     * local coordinate = lc = (a,b,c)
+     * 
+     * local axixes u,v,w
+     * u = a1.i + b1.j + c1.k
+     * v = a2.i + b2.j + c2.k
+     * w = a3.i + b3.j + c3.k
+     * 
+     * matrix from bases => | a1 b1 c1 |
+     *                      | a2 b2 c2 |
+     *                      | a3 b3 c3 |
+     * 
+     * global coordinate = (a,b,c,1) *  | a1 b1 c1 0 | 
+     *                                  | a2 b2 c2 0 |
+     *                                  | a3 b3 c3 0 |
+     *                                  | 0  0  0  1 |
+     *  
+     * 
      * @param {Vec3} xAxis 
      * @param {Vec3} yAxis 
      * @param {Vec3} zAxis 
