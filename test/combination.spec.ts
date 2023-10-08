@@ -3,8 +3,8 @@ import { Mat3, Mat4, Vec2, Vec3 } from "../src"
 const pricision = 2
 
 const f = (value: any) => {
-    if (typeof value === "number") return Number(Number(value).toFixed(pricision))
-    if (Array.isArray(value)) return value.map(n => Number(Number(n).toFixed(pricision)))
+    if (typeof value === "number") return Number(Number(value).toFixed(pricision).replace('-0', '0'))
+    if (Array.isArray(value)) return value.map(n => Number(Number(n).toFixed(pricision).replace('-0', '0')))
     return undefined
 }
 
@@ -31,10 +31,23 @@ describe("combination of Vec2, Vec3, Mat3, Mat4", () => {
     })
 
     test('V3c3 and Mat4', () => {
-        const p = new Vec3(1, 1, 1);
+        const p = new Vec3(1, 0, 0);
 
-        const m1 = Mat4.makeRotationZ(Math.PI / 4).rotateX(-Math.PI / 4)
+        const m1 = Mat4.makeRotationZ(Math.PI / 2).rotateX(-Math.PI / 2).rotateY(Math.PI * 3 / 2)
+        const m2 = Mat4.makeBasis(
+            new Vec3(0, 0, 1),
+            new Vec3(1, 0, 0),
+            new Vec3(0, 1, 0)
+        ).invert();
+        const m3 = Mat4.makeRotationAxis(new Vec3(1, 1, 0).normalize(), Math.PI)
 
-        expect(f(p.clone().applyMat4(m1).toArray())).toEqual([0, 1.71, 0])
+        expect(f(p.clone().applyMat4(m1).toArray())).toEqual([1, 0, 0])
+        expect(f(p.clone().applyMat4(m2).toArray())).toEqual([0, 1, 0])
+        console.log(f(p.clone().applyMat4(m3).toArray()))
+        expect(f(p.clone().applyMat4(m3).toArray())).toEqual([0, 1, 0])
+
+
+
+
     })
 })
