@@ -3,7 +3,7 @@ import Mat3 from "./Mat3";
 import Mat4 from "./Mat4";
 import { Vec2 } from "./Vec2";
 
-
+import { f } from "./utils";
 export default class Vec3 {
     isVec3: boolean = true;
 
@@ -785,7 +785,7 @@ export default class Vec3 {
      * 
      * @returns {object}
      */
-    toJson(): object { return { x: this.x, y: this.y, z: this.z } }
+    toJson(): object { return { x: f(this.x), y: f(this.y), z: f(this.z) } }
 
     /**
      * return a text 
@@ -794,7 +794,7 @@ export default class Vec3 {
      * 
      * @returns string
      */
-    toString(): string { return `Vec3 => x: ${this.x}, y: ${this.y}, z: ${this.z}` }
+    toString(): string { return `Vec3 => x: ${f(this.x)}, y: ${f(this.y)}, z: ${f(this.z)}` }
 
     // fromBufferAttribute(attribute, index) {
 
