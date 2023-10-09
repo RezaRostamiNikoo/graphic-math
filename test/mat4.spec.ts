@@ -1,15 +1,6 @@
 import { Mat4 } from "../src"
 import Mat3 from "../src/Mat3"
-
-const pricision = 2
-
-const f = (value: any) => {
-    if (typeof value === "number") return Number(Number(value).toFixed(pricision))
-    if (Array.isArray(value)) return value.map(n => Number(Number(n).toFixed(pricision)))
-
-
-    return undefined
-}
+import { f } from "../src/utils"
 
 describe("Tests Mat4", () => {
 

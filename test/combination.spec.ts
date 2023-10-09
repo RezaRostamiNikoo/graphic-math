@@ -1,12 +1,7 @@
 import { Mat3, Mat4, Vec2, Vec3 } from "../src"
+import { f } from "../src/utils";
 
-const pricision = 2
 
-const f = (value: any) => {
-    if (typeof value === "number") return Number(Number(value).toFixed(pricision).replace('-0', '0'))
-    if (Array.isArray(value)) return value.map(n => Number(Number(n).toFixed(pricision).replace('-0', '0')))
-    return undefined
-}
 
 describe("combination of Vec2, Vec3, Mat3, Mat4", () => {
 
