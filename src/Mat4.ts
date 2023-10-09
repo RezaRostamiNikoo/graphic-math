@@ -502,8 +502,11 @@ export default class Mat4 {
      * @param {number} dz
      * @returns {Mat4}
      */
-    translate(dx: number, dy: number, dz: number): Mat4 {
-        // TODO: implement another overloading for vector
+    translate(dx: number, dy: number, dz: number): Mat4
+    translate(vec: Vec3): Mat4
+    translate(dx: number | Vec3, dy?: number, dz?: number): Mat4 {
+        if (dx instanceof Vec3)
+            return this.multiplyTo(Mat4.makeTranslation(dx.x, dx.y, dx.z));
         return this.multiplyTo(Mat4.makeTranslation(dx, dy, dz));
     }
 

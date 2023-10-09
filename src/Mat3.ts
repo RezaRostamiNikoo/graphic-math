@@ -204,6 +204,9 @@ export default class Mat3 {
         return this.multiplyTo(Mat3.makeRotation(theta));
     }
 
+
+
+
     /**
      * translates the matrix (axises) in reverse or in other word it translate points 
      * @example 
@@ -213,7 +216,11 @@ export default class Mat3 {
      * @param dy 
      * @returns {Mat3}
      */
-    translate(dx: number, dy: number): Mat3 {
+    translate(dx: number, dy: number): Mat3;
+    translate(vector: Vec2): Mat3;
+    translate(dx: number | Vec2, dy?: number): Mat3 {
+        if (dx instanceof Vec2)
+            return this.multiplyTo(Mat3.makeTranslation(dx.x, dx.y));
         return this.multiplyTo(Mat3.makeTranslation(dx, dy));
     }
 
