@@ -27,6 +27,17 @@ export default class CircularLinkedList<T> {
      */
     getFirst(): Node<T> { return this._head }
 
+
+    /**
+     * Takes an integer value and returns the item at that index, allowing for positive and negative integers. Negative integers count back from the last item in the array.
+     * @param {number} index 
+     * @returns {Node<T>}
+     */
+    at(index: number): Node<T> {
+        return this._list.at(index);
+    }
+
+
     /**
      * adds en element to the end of the list
      * @param {T} element 

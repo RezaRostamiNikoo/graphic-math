@@ -1,5 +1,6 @@
 import { Mat4, Vec3 } from "./";
 import { CircularLinkedList } from "./CircularLinkedList";
+import Node from "./Node";
 
 export default class Polygon3 {
     private _points: CircularLinkedList<Vec3>
@@ -12,6 +13,15 @@ export default class Polygon3 {
 
     /** returns the polygon's points as Array */
     get points(): Array<Vec3> { return this._points.toArray() }
+
+    /**
+     * Takes an integer value and returns the point at that index, allowing for positive and negative integers. Negative integers count back from the last item in the array.
+     * @param {number} index allowing negative value 
+     * @returns {Node<Vec3>}
+     */
+    getPointAt(index: number): Node<Vec3> {
+        return this._points.at(index)
+    }
 
     /**
      * adds new point to the polyon
@@ -55,10 +65,10 @@ export default class Polygon3 {
         return this;
     }
 
-    // canMakeVolumeWith(polygon: Polygon3): boolean {
-    //     if (this._points.length !== this._points.length) throw new Error(`Polygon3.canMakeVolumeWith | polygons do not have the same length of points`);
-    //     return true;
-    // }
+    canMakeVolumeWith(polygon: Polygon3): boolean {
+        if (this._points.length !== this._points.length) throw new Error(`Polygon3.canMakeVolumeWith | polygons do not have the same length of points`);
+        return true;
+    }
 
     // toMesh3(holes: Array<Polygon3> = []): Mesh3 {
     //     return new EarcutTriangulation3().generateMesh(this._points, holes.map(h => h._points));
