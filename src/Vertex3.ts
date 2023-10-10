@@ -1,4 +1,4 @@
-import { Vec3 } from ".";
+import { Mat4, Vec3 } from ".";
 
 export default class Vertex3 {
     position: Vec3;
@@ -18,7 +18,16 @@ export default class Vertex3 {
         this.id = `${JSON.stringify(this.toJson())}`;
     }
 
-
+    /**
+     * applys given transformation matrix 
+     * @param {Mat4} math 
+     * @returns {Vertex3}
+     */
+    applyMat4(math: Mat4): this {
+        this.position.applyMat4(math)
+        this.normal.applyMat4(math)
+        return this
+    }
 
     toJson(): object {
         return {
