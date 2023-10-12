@@ -1,7 +1,7 @@
-import EarcutTriangulation3 from "./EarcutTriangulation3";
+// import EarcutTriangulation3 from "./EarcutTriangulation3";
 
 
 
-export {
-    EarcutTriangulation3,
-}
+// export {
+//     EarcutTriangulation3,
+// }

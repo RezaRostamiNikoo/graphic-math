@@ -118,10 +118,10 @@ export class Mesh3 {
         for (let i = 0; i < p1.points.length; i++) {
             result.addTriangles(
                 [
-                    new Vertex3(p1.getPointAt(i).element),
-                    new Vertex3(p1.getPointAt(i).next.element),
-                    new Vertex3(p2.getPointAt(i).next.element),
-                    new Vertex3(p2.getPointAt(i).element)
+                    new Vertex3(p1.getPointAt(i).value),
+                    new Vertex3(p1.getPointAt(i).next.value),
+                    new Vertex3(p2.getPointAt(i).next.value),
+                    new Vertex3(p2.getPointAt(i).value)
                 ],
                 [0, 1, 2, 0, 2, 3]
             )
