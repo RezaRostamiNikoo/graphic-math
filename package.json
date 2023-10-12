@@ -2,7 +2,11 @@
   "name": "graphic-math",
   "version": "1.0.0",
   "description": "a library to deal with all mathematic need in computer graphic",
-  "main": "src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/inde.d.ts",
+  "files": [
+    "./dist/index.d.ts"
+  ],
   "scripts": {
     "build": "webpack",
     "test": "jest"

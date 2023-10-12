@@ -1,8 +1,10 @@
 const path = require("path");
 
+const libraryName = "graphic-math"
 
 /** @type {import("webpack").Configuration} */
 module.exports = {
+    mode: "production",
     entry: "./src/index.ts",
     resolve: {
         extensions: [".ts", ".js"],
@@ -12,14 +14,7 @@ module.exports = {
             {
                 test: /\.ts?/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            transpileOnly: true
-                        }
-                    }
-                ]
+                use: "ts-loader"
             }
         ],
     },
@@ -30,7 +25,7 @@ module.exports = {
             }, stats => {
                 var dts = require('dts-bundle');
                 dts.bundle({
-                    name: "predefined-ds",
+                    name: libraryName,
                     main: './dist/typings/index.d.ts',
                     out: '../index.d.ts',
                     removeSource: true,
@@ -47,9 +42,9 @@ module.exports = {
         library: {
             type: "umd",
             name: {
-                amd: "graphic-math",
-                root: "graphic-math",
-                commonjs: "graphic-math",
+                amd: libraryName,
+                root: libraryName,
+                commonjs: libraryName,
             },
 
         }
