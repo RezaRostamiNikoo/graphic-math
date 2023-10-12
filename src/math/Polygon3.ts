@@ -1,6 +1,5 @@
+import { CircularLinkedListNode, CircularLinkedList } from "predefined-ds";
 import { Mat4, Vec3 } from "./";
-import { CircularLinkedList } from "./CircularLinkedList";
-import Node from "./Node";
 
 export default class Polygon3 {
     private _points: CircularLinkedList<Vec3>
@@ -17,9 +16,9 @@ export default class Polygon3 {
     /**
      * Takes an integer value and returns the point at that index, allowing for positive and negative integers. Negative integers count back from the last item in the array.
      * @param {number} index allowing negative value 
-     * @returns {Node<Vec3>}
+     * @returns {CircularLinkedListNode<Vec3>}
      */
-    getPointAt(index: number): Node<Vec3> {
+    getPointAt(index: number): CircularLinkedListNode<Vec3> {
         return this._points.at(index)
     }
 
