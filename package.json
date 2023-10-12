@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/inde.d.ts",
   "files": [
+    "./dist/index.js",
     "./dist/index.d.ts"
   ],
   "scripts": {
