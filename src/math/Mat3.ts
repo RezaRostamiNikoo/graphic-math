@@ -3,14 +3,14 @@ this class is from threejs class (Matrix3)
 the link is: https://github.com/mrdoob/three.js/blob/dev/src/math/Matrix3.js
 */
 
-import Vec2 from "./Vec2";
+import {Vec2} from "./Vec2";
 
 // import { CoorSys2, Vector2 } from ".";
 
 /**
  * for this we have assume that all Vectors are a Matrix 1x3 not 3x1
  */
-export default class Mat3 {
+export  class Mat3 {
 
     isMat3: boolean = true;
 
@@ -394,5 +394,3 @@ export default class Mat3 {
     //     return Mat3x3.makeBasis(coor.u, coor.v).translate(coor.origin);
     // }
 }
-
-export { Mat3 }

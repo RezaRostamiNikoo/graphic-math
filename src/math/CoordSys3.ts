@@ -1,5 +1,5 @@
-import Mat4 from "./Mat4";
-import Vec3 from "./Vec3";
+import {Mat4} from "./Mat4";
+import {Vec3} from "./Vec3";
 
 /**
  * defines a cartesian coordinate system the direction od the coordinate axis in global space and also its origin location

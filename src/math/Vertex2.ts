@@ -1,6 +1,6 @@
 import { Vec2 } from ".";
 
-export default class Vertex2 {
+export class Vertex2 {
     position: Vec2;
     normal: Vec2;
 

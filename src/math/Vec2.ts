@@ -1,8 +1,8 @@
 
-import Mat3 from "./Mat3";
-import Vec3 from "./Vec3";
+import { Mat3 } from "./Mat3";
+import { Vec3 } from "./Vec3";
 
-export default class Vec2 {
+export class Vec2 {
 
     isVector2: boolean = true;
 
@@ -624,5 +624,3 @@ export default class Vec2 {
     }
 
 }
-
-export { Vec2 }

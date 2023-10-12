@@ -1,10 +1,10 @@
 
-import Mat3 from "./Mat3";
-import Mat4 from "./Mat4";
+import { Mat3 } from "./Mat3";
+import { Mat4 } from "./Mat4";
 import { Vec2 } from "./Vec2";
 
 import { f } from "./utils";
-export default class Vec3 {
+export class Vec3 {
     isVec3: boolean = true;
 
     /** first component of the vector */
@@ -1037,5 +1037,3 @@ export default class Vec3 {
         return Vec3.fromArray(mat.elements, index * 3);
     }
 }
-
-export { Vec3 };

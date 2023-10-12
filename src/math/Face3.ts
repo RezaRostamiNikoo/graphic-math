@@ -1,11 +1,11 @@
 // import { Mesh3, Vec3, EarcutTriangulation3, Mat4x4, } from "./";
 // import { Obj } from "../formats";
 
-import Mat4 from "./Mat4";
-import Polygon3 from "./Polygon3";
-import Vec3 from "./Vec3";
+import { Mat4 } from "./Mat4";
+import { Polygon3 } from "./Polygon3";
+import { Vec3 } from "./Vec3";
 
-export default class Face3 {
+export class Face3 {
 
     private _polygons: Array<Polygon3>;
     private _holes: Array<Polygon3>;
@@ -148,5 +148,3 @@ export default class Face3 {
     //     return new Obj(mesh.vertices, mesh.indices);
     // }
 }
-
-export { Face3 }

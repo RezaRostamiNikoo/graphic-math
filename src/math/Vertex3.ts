@@ -1,6 +1,6 @@
 import { Mat4, Vec3 } from ".";
 
-export default class Vertex3 {
+export class Vertex3 {
     position: Vec3;
     normal: Vec3;
 

@@ -1,14 +1,14 @@
 // import { Quaternion, Mat4x4, MathUtils, Vector3 } from './';
 
-import Mat4 from "./Mat4";
-import Vec3 from "./Vec3";
+import {Mat4} from "./Mat4";
+import {Vec3} from "./Vec3";
 
 const _matrix = /*@__PURE__*/ new Mat4();
 // const _quaternion = /*@__PURE__*/ new Quaternion();
 
 export type EulerOrder = "XYZ" | "XZY" | "YXZ" | "YZX" | "ZXY" | "ZYX";
 
-export default class Euler {
+export  class Euler {
 
     public static DEFAULT_ORDER: EulerOrder = "XYZ";
 
@@ -313,5 +313,3 @@ export default class Euler {
         )
     }
 }
-
-export { Euler }

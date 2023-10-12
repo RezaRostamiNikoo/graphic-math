@@ -1,11 +1,10 @@
-import Mat3 from "./Mat3";
-import Mat4 from "./Mat4";
-import Vec2 from "./Vec2";
+import { Mat3 } from "./Mat3";
+import { Vec2 } from "./Vec2";
 
 /**
  * this Class define the direction od the coordinate axis in global space and also its origin location
  */
-export default class CoordSys2 {
+export class CoordSys2 {
     private _origin: Vec2;
     private _u: Vec2;
     private _v: Vec2;
@@ -106,5 +105,3 @@ export default class CoordSys2 {
             origin);
     }
 }
-
-export { CoordSys2 }

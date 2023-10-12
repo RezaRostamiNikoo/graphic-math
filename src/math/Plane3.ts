@@ -1,6 +1,6 @@
-import Vec3 from "./Vec3";
+import { Vec3 } from "./Vec3";
 
-export default class Plane3 {
+export class Plane3 {
 
 	private _point: Vec3;
 	private _normal: Vec3;
@@ -11,5 +11,3 @@ export default class Plane3 {
 	}
 
 }
-
-export { Plane3 };

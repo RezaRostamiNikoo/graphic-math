@@ -3,14 +3,14 @@
  * the github link of this class is: https://github.com/mrdoob/three.js/blob/dev/src/math/Matrix4.js
  */
 
-import Mat3 from "./Mat3";
-import Vec3 from "./Vec3";
+import { Mat3 } from "./Mat3";
+import {Vec3} from "./Vec3";
 
 // import { Quaternion, Mat3x3, Vec3, Euler } from ".";
 // import { WebGLCoordinateSystem, WebGPUCoordinateSystem } from '../constants';
 
 
-export default class Mat4 {
+export  class Mat4 {
 
     isMat4: boolean = true;
 
@@ -1083,5 +1083,3 @@ export default class Mat4 {
         )
     }
 }
-
-export { Mat4 }

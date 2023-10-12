@@ -1,12 +1,12 @@
 // import { Obj } from "../formats";
 // import { Face3, Mat4x4, Polygon3, Vertex3 } from ".";
 
-import Face3 from "./Face3";
-import Mat4 from "./Mat4";
-import Polygon3 from "./Polygon3";
-import Vertex3 from "./Vertex3";
+import { Face3 } from "./Face3";
+import { Mat4 } from "./Mat4";
+import { Polygon3 } from "./Polygon3";
+import { Vertex3 } from "./Vertex3";
 
-export default class Mesh3 {
+export class Mesh3 {
 
     private _vertices: Array<Vertex3> = [];
     private _indices: Array<number> = [];
@@ -150,5 +150,3 @@ export default class Mesh3 {
         return result;
     }
 }
-
-export { Mesh3 }

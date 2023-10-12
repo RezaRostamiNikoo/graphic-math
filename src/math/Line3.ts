@@ -1,6 +1,6 @@
 import { Mat4, Vec3 } from "./";
 
-export default class Line3 {
+export  class Line3 {
     private _point: Vec3;
     private _normal: Vec3;
 

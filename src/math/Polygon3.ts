@@ -1,7 +1,7 @@
 import { CircularLinkedListNode, CircularLinkedList } from "predefined-ds";
 import { Mat4, Vec3 } from "./";
 
-export default class Polygon3 {
+export  class Polygon3 {
     private _points: CircularLinkedList<Vec3>
 
     constructor(points: Array<Vec3>) {
@@ -77,5 +77,3 @@ export default class Polygon3 {
         return this.points.map(p => p.toJson());
     }
 }
-
-export { Polygon3 }

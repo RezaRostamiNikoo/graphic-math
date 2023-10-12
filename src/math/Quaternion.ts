@@ -1,10 +1,10 @@
 // import { Euler, Mat4x4, Vec3, MathUtils } from "./";
 
-import Euler from "./Euler";
-import Mat4 from "./Mat4";
-import Vec3 from "./Vec3";
+import { Euler } from "./Euler";
+import { Mat4 } from "./Mat4";
+import { Vec3 } from "./Vec3";
 
-export default class Quaternion {
+export class Quaternion {
     isQuaternion: boolean = true;
 
     private _x: number;
@@ -649,5 +649,3 @@ export default class Quaternion {
 
     }
 }
-
-export { Quaternion }
