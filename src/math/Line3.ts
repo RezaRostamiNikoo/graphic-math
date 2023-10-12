@@ -1,6 +1,6 @@
 import { Mat4, Vec3 } from "./";
 
-export  class Line3 {
+export class Line3 {
     private _point: Vec3;
     private _normal: Vec3;
 
@@ -10,7 +10,7 @@ export  class Line3 {
     }
 
 
-    applyMat4x4(mat: Mat4): Line3 {
+    applyMat4(mat: Mat4): Line3 {
         this._point.applyMat4(mat);
         this._normal.applyMat4(mat);
         return this;
