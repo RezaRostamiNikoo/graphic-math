@@ -23,6 +23,22 @@ module.exports = {
             }
         ],
     },
+    plugins: [
+        function () {
+            this.hooks.done.tap({
+                name: "dts-bundler"
+            }, stats => {
+                var dts = require('dts-bundle');
+                dts.bundle({
+                    name: "predefined-ds",
+                    main: './dist/typings/index.d.ts',
+                    out: '../index.d.ts',
+                    removeSource: true,
+                    outputAsModuleFolder: true // to use npm in-package typings
+                });
+            })
+        }
+    ],
     devtool: "source-map",
     output: {
         filename: "index.js",
