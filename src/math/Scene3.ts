@@ -13,7 +13,7 @@ export type SceneCopyOptions = {
     meshes?: boolean;
 }
 
-export class Scene3 {
+export default class Scene3 {
     // TODO: check which option is better: init all as parameter or init them in method
     private _coordSys3: CoordSys3;
     id: number;
