@@ -1,5 +1,5 @@
-import {Mat4} from "./Mat4";
-import {Vec3} from "./Vec3";
+import { Mat4 } from "./Mat4";
+import { Vec3 } from "./Vec3";
 
 /**
  * defines a cartesian coordinate system the direction od the coordinate axis in global space and also its origin location
@@ -128,5 +128,17 @@ export class CoordSys3 {
             new Vec3(Math.cos(theta), Math.sin(theta)),
             new Vec3(-Math.sin(theta), Math.cos(theta)),
             origin);
+    }
+
+    /**
+     * return a basic coordinate system with i,j,k normals
+     * @returns {CoordSys3}
+     */
+    public static basicCoordSys3(): CoordSys3 {
+        return new CoordSys3(
+            new Vec3(1, 0, 0),
+            new Vec3(0, 1, 0),
+            new Vec3(0, 0, 1)
+        )
     }
 }
