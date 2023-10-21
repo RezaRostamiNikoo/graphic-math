@@ -104,10 +104,29 @@ export class Face3 {
      * @param {Mat4} mat 
      * @returns {Face3}
      */
-    applyMat4(mat: Mat4): Face3 {
+    applyMat4(mat: Mat4): this {
         this._polygons.forEach(p => p.applyMat4(mat));
         this._holes.forEach(p => p.applyMat4(mat));
         return this;
+    }
+
+    /**
+     * moves the face
+     * @param {number} dx movement length in x direction
+     * @param {number} dy movement length in y direction
+     * @param {number} dz movement length in z direction
+     * @returns {Face3}
+     */
+    translate(dx: number, dy: number, dz: number): this;
+    /**
+     * moves the faces toward given vector
+     * @param {Vec3} vec 
+     * @returns {Face3}
+     */
+    translate(vec: Vec3): this;
+    translate(dx: number | Vec3, dy?: number, dz?: number): this {
+        this.polygons.forEach(p => p.applyMat4(Mat4.makeTranslation(dx as number, dy, dz)))
+        return this
     }
 
     canMakeVolumeWith(face: Face3): boolean {
