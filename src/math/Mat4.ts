@@ -4,13 +4,13 @@
  */
 
 import { Mat3 } from "./Mat3";
-import {Vec3} from "./Vec3";
+import { Vec3 } from "./Vec3";
 
 // import { Quaternion, Mat3x3, Vec3, Euler } from ".";
 // import { WebGLCoordinateSystem, WebGPUCoordinateSystem } from '../constants';
 
 
-export  class Mat4 {
+export class Mat4 {
 
     isMat4: boolean = true;
 
@@ -648,21 +648,33 @@ export  class Mat4 {
     }
 
     /**
-     * returns a matrix for translating a points or 
+     * returns a matrix for translating a points or ...
      * @param {number} dx 
      * @param {number} dy 
      * @param {number} dz 
      * @returns {Mat4}
      */
-    public static makeTranslation(dx: number, dy?: number, dz?: number): Mat4 {
-        // TODO : uncomment overloading for vector in above line and 
-        // implement the vector as an input
+    public static makeTranslation(dx: number, dy?: number, dz?: number): Mat4;
+    /**
+     * returns a matrix for translating a points or ...
+     * @param {Vec3} vec 
+     * @returns {Mat4}
+     */
+    public static makeTranslation(vec: Vec3): Mat4;
+    public static makeTranslation(dx: number | Vec3, dy?: number, dz?: number): Mat4 {
+        if (dx instanceof Vec3)
+            return new Mat4().set(
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                dx.x, dx.y, dx.z, 1
+            )
         return new Mat4().set(
             1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             dx, dy, dz, 1
-        );
+        )
     }
 
     /**
