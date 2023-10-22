@@ -1,3 +1,12 @@
+## [1.5.1](https://github.com/rezarostaminikoo/graphic-math/compare/v1.5.0...v1.5.1) (2023-10-22)
+
+
+### Features
+
+* **log:** add changelog to the codebae ([efc6d3b](https://github.com/rezarostaminikoo/graphic-math/commit/efc6d3bb5386248c938690cefcd6aeab9db490b2))
+
+
+
 # [1.5.0](https://github.com/rezarostaminikoo/graphic-math/compare/v1.4.0...v1.5.0) (2023-10-22)
 
 
