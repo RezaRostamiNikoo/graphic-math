@@ -1,6 +1,7 @@
 
 import { Mat3 } from "./Mat3";
 import { Vec3 } from "./Vec3";
+import { f } from "./utils";
 
 export class Vec2 {
 
@@ -367,12 +368,16 @@ export class Vec2 {
     /**
      * calculates cross product
      * @param {Vec2} vec  
-     * @returns {Vec2}
+     * @returns {Vec3}
      */
-    cross(vec: Vec2): number {
-
-        return this.x * vec.y - this.y * vec.x;
-
+    cross(vec: Vec2): Vec3 {
+        const result = new Vec3();
+        const ax = this.x, ay = this.y;
+        const bx = vec.x, by = vec.y;
+        result.x = 0;
+        result.y = 0;
+        result.z = ax * by - ay * bx;
+        return result;
     }
 
     /**
@@ -505,19 +510,31 @@ export class Vec2 {
     }
 
     /**
-     * returns an array of components
-     * @param {Array<number>} [array=[]] 
-     * @param {number} offset 
-     * @returns {Array<number>}
+     * return an array includes all the components of the vector in a row
+     * @example 
+     * new Vec3(4,5).toArray() => [4,5,6]
+     * 
+     * @returns {Array}
      */
-    toArray(array: Array<number> = [], offset: number = 0) {
+    toArray(): Array<number> { return [this.x, this.y] }
 
-        array[offset] = this.x;
-        array[offset + 1] = this.y;
+    /**
+     * return an object 
+     * @example
+     * new Vec3(4,5).toArray() => { x:4, y:5 }
+     * 
+     * @returns {{ x: number, y: number }}
+     */
+    toJson(): { x: number, y: number } { return { x: f(this.x) as number, y: f(this.y) as number } }
 
-        return array;
-
-    }
+    /**
+     * return a text 
+     * @example
+     * new Vec3(4,5).toArray() => "Vec3 => x: 4, y: 5"
+     * 
+     * @returns string
+     */
+    toString(): string { return `Vec3 => x: ${f(this.x)}, y: ${f(this.y)}}` }
 
     /**
      * rotates vector around the prependicular vector to the xy plan and arounf a center 
@@ -590,14 +607,11 @@ export class Vec2 {
      * @returns {Vec2}
      */
     public static subVectors(a: Vec2, b: Vec2): Vec2 {
-        return new Vec2(
-            a.x - b.x,
-            a.y - b.y
-        );
+        return new Vec2(a.x - b.x, a.y - b.y)
     }
 
     /**
-     * interpolates between two vectors
+     * linear interpolation between two vector
      * @param {Vec2} v1 
      * @param {Vec2} v2 
      * @param {number} t between 0 to 1 
@@ -611,16 +625,81 @@ export class Vec2 {
     }
 
     /**
-     * creates vector2 from an array
+     * gets an array and return a vector from array items started from offset in index
+     * @example
+     * Vec3.fromArray([5,6]) 
      * @param {Array<number>} array 
      * @param {number} offset 
      * @returns {Vec2}
      */
-    public static fromArray(array: Array<number>, offset: number = 0) {
-        return new Vec2(
-            array[offset],
-            array[offset + 1]
-        )
+    public static fromArray(array: Array<number>, offset = 0): Vec2 {
+        return new Vec2(array[offset], array[offset + 1])
     }
+
+    /**
+     * It generates a vector and sets the components of the current vector using Cylindrical Coordinate system
+     * the important point is the cyilindrical direction
+     * @param {number} radius 
+     * @param {number} theta angle in radian from X axis 
+     * @returns {Vec2} equivalent cartesian vector
+     */
+    public static setFromCylindricalCoords(radius: number, theta: number): Vec2 {
+        return new Vec2(radius * Math.cos(theta), radius * Math.sin(theta))
+    }
+
+    /**
+     * calculate cross multiplication of two vectors
+     * @param {Vec2} a 
+     * @param {Vec2} b 
+     * @returns {Vec3}
+     */
+    public static crossVectors(a: Vec2, b: Vec2): Vec3 {
+        const result = new Vec3();
+        const ax = a.x, ay = a.y;
+        const bx = b.x, by = b.y;
+        result.x = 0;
+        result.y = 0;
+        result.z = ax * by - ay * bx;
+        return result;
+    }
+
+    /**
+     * multiply two vector corresponding components together
+     * @param {Vec2} a 
+     * @param {Vec2} b 
+     * @returns {Vec2}
+     */
+    public static multilpyVectors(a: Vec2, b: Vec2): Vec2 {
+        const result = new Vec2();
+        result.x = a.x * b.x;
+        result.y = a.y * b.y;
+        return result;
+    }
+
+    /**
+     * calculate dot multiplication of two vectors
+     * @param {Vec2} a 
+     * @param {Vec2} b 
+     * @returns {number}
+     */
+    public static dotVectors(a: Vec2, b: Vec2): number {
+        return a.x * b.x + a.y * b.y
+    }
+
+    /**
+     * generates a vector with random direction
+     * @returns {Vec2}
+     */
+    public static randomDirection(): Vec2 {
+
+        // Derived from https://mathworld.wolfram.com/SpherePointPicking.html
+
+        const u = (Math.random() - 0.5) * 2
+        const t = Math.random() * Math.PI * 2
+        const f = Math.sqrt(1 - u ** 2)
+
+        return new Vec2(f * Math.cos(t), f * Math.sin(t))
+    }
+
 
 }
