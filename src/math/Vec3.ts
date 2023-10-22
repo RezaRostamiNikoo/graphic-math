@@ -785,7 +785,9 @@ export class Vec3 {
      * 
      * @returns {object}
      */
-    toJson(): object { return { x: f(this.x), y: f(this.y), z: f(this.z) } }
+    toJson(): { x: number, y: number, z: number } {
+        return { x: f(this.x) as number, y: f(this.y) as number, z: f(this.z) as number }
+    }
 
     /**
      * return a text 
