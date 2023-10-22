@@ -1,5 +1,4 @@
-import { Vec2 } from "../src";
-import { CoordSys2 } from "../src/CoordSys2"
+import { CoordSys2, Vec2 } from "../src";
 
 const pricision = 2
 
@@ -27,8 +26,8 @@ describe("Test scenarios for CoordSys2", () => {
         expect(f(lcs.toArray())).toEqual([0, 1, -1, 0])
 
 
-        expect(f(l2.localToGlobal(new Vec2(1, -1)).toArray())).toEqual(f(new Vec2(Math.sqrt(2), 0).toArray()))
-        expect(f(l2.globalToLocal(new Vec2(1, -1)).toArray())).toEqual(f(new Vec2(0, -Math.sqrt(2)).toArray()))
+        expect(f(new Vec2(1, -1).applyMat3(l2.getMatLToG()).toArray())).toEqual(f(new Vec2(Math.sqrt(2), 0).toArray()))
+        expect(f(new Vec2(1, -1).applyMat3(l2.getMatGToL()).toArray())).toEqual(f(new Vec2(0, -Math.sqrt(2)).toArray()))
 
     })
 

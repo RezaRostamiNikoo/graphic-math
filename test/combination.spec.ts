@@ -1,7 +1,6 @@
-import { Mat3, Mat4, Vec2, Vec3 } from "../src"
-import { f } from "../src/utils";
+import { Mat3, Mat4, Vec2, Vec3, gmUtils } from "../src"
 
-
+const { f } = gmUtils
 
 describe("combination of Vec2, Vec3, Mat3, Mat4", () => {
 
@@ -38,7 +37,6 @@ describe("combination of Vec2, Vec3, Mat3, Mat4", () => {
 
         expect(f(p.clone().applyMat4(m1).toArray())).toEqual([1, 0, 0])
         expect(f(p.clone().applyMat4(m2).toArray())).toEqual([0, 1, 0])
-        console.log(f(p.clone().applyMat4(m3).toArray()))
         expect(f(p.clone().applyMat4(m3).toArray())).toEqual([0, 1, 0])
 
 

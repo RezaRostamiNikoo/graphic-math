@@ -1,5 +1,5 @@
-import { Mat4, Vec3 } from "../src"
-import { Polygon3 } from "../src/Polygon3"
+import { Mat4, Vec3, Polygon3 } from "../src"
+
 describe("polygon", () => {
 
 

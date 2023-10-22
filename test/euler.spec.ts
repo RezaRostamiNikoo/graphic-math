@@ -1,6 +1,6 @@
-import { Euler } from "../src/Euler"
-import Mat4 from "../src/Mat4"
-import { f } from "../src/utils"
+import { Euler, Mat4, gmUtils } from "../src"
+
+const { f } = gmUtils
 
 describe("Euler test", () => {
 

@@ -1,6 +1,6 @@
-import { Vec3 } from "../src"
-import { f } from "../src/utils";
+import { Vec3, gmUtils } from "../src"
 
+const { f } = gmUtils
 
 describe(`Test for Vec3`, () => {
 
