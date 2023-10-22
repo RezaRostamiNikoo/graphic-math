@@ -86,11 +86,11 @@ export class Vec3 {
 
     /**
      * sets component value using its index
-     * @param {number} index index of component
+     * @param {0 | 1 | 2} index index of component
      * @param {number} value component value
      * @returns {Vec3} return the vector with new value for component with given index
      */
-    setComponent(index: number, value: number): Vec3 {
+    setComponent(index: 0 | 1 | 2, value: number): Vec3 {
         switch (index) {
             case 0: this.x = value; break;
             case 1: this.y = value; break;
@@ -102,10 +102,10 @@ export class Vec3 {
 
     /**
      * returns one of the component of the vector with given index
-     * @param {number} index component index
+     * @param {0 | 1 | 2} index component index
      * @returns {number} value of the component
      */
-    getComponent(index: number) {
+    getComponent(index: 0 | 1 | 2) {
         switch (index) {
             case 0: return this.x;
             case 1: return this.y;
@@ -1010,9 +1010,9 @@ export class Vec3 {
      */
     public static setFromMat4Scale(mat: Mat4): Vec3 {
 
-        const sx = Vec3.setFromMat4Row(mat, 0).length();
-        const sy = Vec3.setFromMat4Row(mat, 1).length();
-        const sz = Vec3.setFromMat4Row(mat, 2).length();
+        const sx = Vec3.setFromMat4Row(mat, 1).length();
+        const sy = Vec3.setFromMat4Row(mat, 2).length();
+        const sz = Vec3.setFromMat4Row(mat, 3).length();
 
         return new Vec3(sx, sy, sz)
     }
@@ -1020,10 +1020,10 @@ export class Vec3 {
     /**
      * extracts a row of given matrix 4x4 as a vector
      * @param {Mat4} mat 
-     * @param index 
+     * @param {1|2|3|4} index 
      * @returns {Vec3}
      */
-    public static setFromMat4Row(mat: Mat4, index: number): Vec3 {
+    public static setFromMat4Row(mat: Mat4, index: 1 | 2 | 3 | 4): Vec3 {
         return Vec3.fromArray(mat.elements, index * 4);
     }
 
@@ -1033,7 +1033,11 @@ export class Vec3 {
      * @param {number} index 
      * @returns {Vec3}
      */
-    public static setFromMatrix3Column(mat: Mat3, index: number): Vec3 {
-        return Vec3.fromArray(mat.elements, index * 3);
+    public static setFromMatrix3Column(mat: Mat3, index: 1 | 2 | 3): Vec3 {
+        return Vec3.fromArray([
+            mat.elements[0 + index - 1],
+            mat.elements[3 + index - 1],
+            mat.elements[6 + index - 1],
+        ]);
     }
 }
