@@ -4,6 +4,7 @@
 import { Face3 } from "./Face3";
 import { Mat4 } from "./Mat4";
 import { Polygon3 } from "./Polygon3";
+import { Vec3 } from "./Vec3";
 import { Vertex3 } from "./Vertex3";
 
 export class Mesh3 {
@@ -148,5 +149,17 @@ export class Mesh3 {
             result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.holes[ih], f2.holes[ih]));
         }
         return result;
+    }
+
+    /**
+     * extrudes a face in a direction - default direction is the face normal vector direction
+     * @param {Face3} face 
+     * @param {number} thickness 
+     * @param {Vec3} direction 
+     * @returns {Mesh3}
+     */
+    public static extrudeFace(face: Face3, thickness: number, direction?: Vec3): Mesh3 {
+        const faceB = face.clone().translate(face.normal.multiplyScalar(thickness));
+        return Mesh3.fromTwoFaces(face, faceB);
     }
 }

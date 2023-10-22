@@ -2,6 +2,7 @@
 // import { Obj } from "../formats";
 
 import { Mat4 } from "./Mat4";
+import { Mesh3 } from "./Mesh3";
 import { Polygon3 } from "./Polygon3";
 import { Vec3 } from "./Vec3";
 
@@ -154,10 +155,6 @@ export class Face3 {
         return points[1].clone().sub(points[0].clone()).cross(points[2].clone().sub(points[0].clone())).normalize();
     }
 
-    // extrude(thickness: number): Mesh3 {
-    //     const faceB = this.clone().translate(this.normal.multiplyScalar(thickness));
-    //     return Mesh3.fromTwoFaces(this, faceB);
-    // }
 
 
 
