@@ -118,6 +118,17 @@ export class CoordSys3 {
     }
 
     /**
+     * translates this coordinate system in parent cartesian coordinate system space 
+     * @param {Vec3} vec 
+     * @returns {CoordSys3}
+     */
+    translate(vec: Vec3): this {
+        const tm = Mat4.makeTranslation(vec)
+        this.applyMat4(tm)
+        return this
+    }
+
+    /**
      * this method generate the coordinate system from an angle between u and  axises
      * @param theta the angle of u axis and the X axis - Radian
      * @param origin the global coordinate od the local system

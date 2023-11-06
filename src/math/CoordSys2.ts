@@ -88,6 +88,18 @@ export class CoordSys2 {
     }
 
     /**
+     * translates this coordinate system in parent cartesian coordinate system space 
+     * @param {Vec2} vec 
+     * @returns {CoordSys2}
+     */
+    translate(vec: Vec2): this {
+        if (this.isBaseCoordSys2) return this
+        const tm = Mat3.makeTranslation(vec.x, vec.y)
+        this._origin.applyMat3(tm)
+        return this
+    }
+
+    /**
      * return an array which represents all the components of its normals
      */
     toArray(): Array<number> { return [...this._u.toArray(), ...this._v.toArray()] }
