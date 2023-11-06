@@ -142,6 +142,24 @@ export class Face3 {
     //     return result;
     // }
 
+    /**
+     * create a mesh by extruding face towards the given vector or its normal if there is no given vector
+     * @param {Vec3} vec the direction and the length to be extruded
+     * @returns {Mesh3}
+     */
+    extrude(vec: Vec3): Mesh3
+    /**
+     * create a mesh by extruding face towards the given vector or its normal if there is no given vector
+     * @param {number} thikness the thickness of extruding towards the face's normal
+     * @returns {Mesh3}
+     */
+    extrude(thikness: number): Mesh3
+    extrude(vec: Vec3 | number): Mesh3 {
+        if (vec instanceof Vec3)
+            return Mesh3.fromTwoFaces(this.clone(), this.clone().translate(vec))
+        return Mesh3.fromTwoFaces(this.clone(), this.clone().translate(this.normal.multiplyScalar(vec)))
+    }
+
     toJson(): object {
         return {
             polygons: this._polygons.map(p => p.toJson()),
