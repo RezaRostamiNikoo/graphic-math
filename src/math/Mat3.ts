@@ -3,14 +3,14 @@ this class is from threejs class (Matrix3)
 the link is: https://github.com/mrdoob/three.js/blob/dev/src/math/Matrix3.js
 */
 
-import {Vec2} from "./Vec2";
+import { Vec2 } from "./Vec2";
 
 // import { CoorSys2, Vector2 } from ".";
 
 /**
  * for this we have assume that all Vectors are a Matrix 1x3 not 3x1
  */
-export  class Mat3 {
+export class Mat3 {
 
     isMat3: boolean = true;
 
@@ -300,13 +300,31 @@ export  class Mat3 {
     /**
      * returns a translate matrix in 2D space
      * @example
-     * | 1  0  0 |
-     * | 0  1  0 |
-     * |dx dy  1 |
+     * | 1     0      0 |
+     * | 0     1      0 |
+     * | vec.x vec.y  1 |
      * @param {Vec2} vec
      * @returns {Mat3}
      */
-    public static makeTranslation(dx: number, dy: number) {
+    public static makeTranslation(dx: number, dy: number);
+    /**
+     * returns a translate matrix in 2D space
+     * @example
+     * | 1  0  0 |
+     * | 0  1  0 |
+     * |dx dy  1 |
+     * @param {number} dx
+     * @param {number} dy
+     * @returns {Mat3}
+     */
+    public static makeTranslation(vector: Vec2);
+    public static makeTranslation(dx: number | Vec2, dy?: number) {
+        if (dx instanceof Vec2)
+            return new Mat3().set(
+                1, 0, 0,
+                0, 1, 0,
+                dx.x, dx.y, 1
+            );
         return new Mat3().set(
             1, 0, 0,
             0, 1, 0,
