@@ -112,6 +112,14 @@ export class Mesh3 {
     //     return new Obj(this.vertices, this.indices);
     // }
 
+    /**
+     * converts mesh to position attributes ready to be added in webgl array buffer as position attributes
+     * @returns {Array<number>}
+     */
+    toPositionAttribute(): Array<number> {
+        return this._indices.flatMap(i => this._vertices[i].position.toArray())
+    }
+
     /////////////////////////////////////////////
     public static sidesFromTwoPolygons(p1: Polygon3, p2: Polygon3): Mesh3 {
         if (!p1.canMakeVolumeWith(p2)) return null;
