@@ -1,9 +1,6 @@
-// import { Mesh2, Mesh3, Vec3, Vertex2, Vertex3 } from "../../math";
+import { CircularLinkedList } from 'predefined-ds'
+import { Mesh3, Vec3 } from "../../math"
 
-// export interface ITriangulation2 {
-//     generateMesh(vertices: Array<Vertex2>, holes: Array<Array<Vertex2>>): Mesh2;
-// }
-
-// export interface ITriangulation3 {
-//     generateMesh(vertices: Array<Vec3>, holes: Array<Array<Vec3>>): Mesh3;
-// }
+export interface ITriangulation3 {
+    generateMesh(vertices: CircularLinkedList<Vec3>, holes: CircularLinkedList<Vec3>[]): Mesh3
+}

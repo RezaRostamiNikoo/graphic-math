@@ -1,7 +1,4 @@
-// import EarcutTriangulation3 from "./EarcutTriangulation3";
+export * from "./EarcutTriangulation3";
+export * from "./ITriangulation";
 
 
-
-// export {
-//     EarcutTriangulation3,
-// }
