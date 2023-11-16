@@ -139,6 +139,8 @@ export class Face3 {
     toMesh3(): Mesh3 {
         const meshes = this.polygons.map(p => p.toMesh3(this.holes));
         const result = new Mesh3().mergeMany(meshes);
+        // this.polygons.forEach(p => result.addWireFrame(p.points))
+        this.holes.forEach(h => result.addWireFrame([...h.points, h.points[0]]))
         return result;
     }
 

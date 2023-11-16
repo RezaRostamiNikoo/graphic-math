@@ -37,7 +37,7 @@ describe("polygon", () => {
         ])
 
 
-        console.log(p.toMesh3().toJson())
+        console.log((p.toMesh3().toJson() as any).wireframes)
 
     })
 

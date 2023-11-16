@@ -10,6 +10,7 @@ import { Vertex3 } from "./Vertex3";
 export class Mesh3 {
 
     private _vertices: Array<Vertex3> = [];
+    private _wireframeVertices: Array<Array<Vec3>> = []
     private _indices: Array<number> = [];
     private _lastIndex: number = -1;
     private _idVertices: Map<string, number> = new Map();
@@ -54,6 +55,10 @@ export class Mesh3 {
         return this;
     }
 
+    addWireFrame(wireFrame: Array<Vec3>) {
+        this._wireframeVertices.push(wireFrame)
+    }
+
     /**
      * returns a copy of this mesh
      * @returns {Mesh3}
@@ -78,6 +83,7 @@ export class Mesh3 {
      */
     mergeOne(mesh: Mesh3): this {
         this.addTriangles(mesh._vertices, mesh._indices);
+        mesh.getWireframes().forEach(w => this.addWireFrame(w))
         return this;
     }
 
@@ -87,7 +93,7 @@ export class Mesh3 {
      * @returns {Mesh3}
      */
     mergeMany(meshs: Array<Mesh3>): this {
-        meshs.forEach(m => this.addTriangles(m._vertices, m._indices));
+        meshs.forEach(m => this.mergeOne(m));
         return this;
     }
 
@@ -104,6 +110,7 @@ export class Mesh3 {
     toJson(): object {
         return {
             vertices: this._vertices.map(v => v.toJson()),
+            wireframes: this._wireframeVertices.map(v => v.map(p => p.toJson())),
             indices: this._indices
         }
     }
@@ -129,6 +136,8 @@ export class Mesh3 {
 
     }
 
+    getWireframes(): Array<Array<Vec3>> { return this._wireframeVertices }
+
     /////////////////////////////////////////////
     public static sidesFromTwoPolygons(p1: Polygon3, p2: Polygon3): Mesh3 {
         if (!p1.canMakeVolumeWith(p2)) return null;
@@ -143,6 +152,7 @@ export class Mesh3 {
                 ],
                 [0, 1, 2, 0, 2, 3]
             )
+            result.addWireFrame([p1.getPointAt(i).value, p2.getPointAt(i).value])
         }
         return result;
     }
