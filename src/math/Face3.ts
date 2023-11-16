@@ -136,11 +136,11 @@ export class Face3 {
         return true;
     }
 
-    // toMesh3(): Mesh3 {
-    //     const meshes = this.polygons.map(p => p.toMesh3(this.holes));
-    //     const result = new Mesh3().mergeMany(meshes);
-    //     return result;
-    // }
+    toMesh3(): Mesh3 {
+        const meshes = this.polygons.map(p => p.toMesh3(this.holes));
+        const result = new Mesh3().mergeMany(meshes);
+        return result;
+    }
 
     /**
      * create a mesh by extruding face towards the given vector or its normal if there is no given vector

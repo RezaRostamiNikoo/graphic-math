@@ -1,7 +1,8 @@
 import { CircularLinkedListNode, CircularLinkedList } from "predefined-ds";
-import { Mat4, Vec3 } from "./";
+import { Mat4, Mesh3, Vec3 } from "./";
+import EarcutTriangulation3 from '../algorithms/triangulations/EarcutTriangulation3';
 
-export  class Polygon3 {
+export class Polygon3 {
     private _points: CircularLinkedList<Vec3>
 
     constructor(points: Array<Vec3>) {
@@ -69,9 +70,9 @@ export  class Polygon3 {
         return true;
     }
 
-    // toMesh3(holes: Array<Polygon3> = []): Mesh3 {
-    //     return new EarcutTriangulation3().generateMesh(this._points, holes.map(h => h._points));
-    // }
+    toMesh3(holes: Array<Polygon3> = []): Mesh3 {
+        return new EarcutTriangulation3().generateMesh(this._points, holes.map(h => h._points));
+    }
 
     toJson(): object {
         return this.points.map(p => p.toJson());

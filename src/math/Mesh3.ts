@@ -141,8 +141,8 @@ export class Mesh3 {
     public static fromTwoFaces(f1: Face3, f2: Face3): Mesh3 {
         if (!f1.canMakeVolumeWith(f2)) return null;
         const result = new Mesh3();
-        // result.mergeOne(f1.toMesh3());
-        // result.mergeOne(f2.toMesh3());
+        result.mergeOne(f1.toMesh3());
+        result.mergeOne(f2.toMesh3());
         result.mergeOne(Mesh3.sidesFromTwoFaces(f1, f2));
         return result;
     }

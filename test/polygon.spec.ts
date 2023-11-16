@@ -37,6 +37,8 @@ describe("polygon", () => {
         ])
 
 
+        console.log(p.toMesh3().toJson())
+
     })
 
 })
