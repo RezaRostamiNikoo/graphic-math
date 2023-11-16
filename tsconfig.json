@@ -9,7 +9,7 @@
         "declaration": true,
         "declarationDir": "dist/typings",
         "declarationMap": true,
-        
+        "forceConsistentCasingInFileNames": true,
     },
     "exclude": [
         "node_modules"
