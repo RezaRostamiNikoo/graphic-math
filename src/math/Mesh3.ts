@@ -116,8 +116,17 @@ export class Mesh3 {
      * converts mesh to position attributes ready to be added in webgl array buffer as position attributes
      * @returns {Array<number>}
      */
-    toPositionAttribute(): Array<number> {
-        return this._indices.flatMap(i => this._vertices[i].position.toArray())
+    toPositionAttribute(order: "XYZ" | "XZY" | "YXZ" | "YZX" | "ZXY" | "ZYX" = "XYZ"): Array<number> {
+        switch (order) {
+            case "XYZ": return this._indices.flatMap(i => this._vertices[i].position.xyz.toArray())
+            case "XZY": return this._indices.flatMap(i => this._vertices[i].position.xzy.toArray())
+            case "YXZ": return this._indices.flatMap(i => this._vertices[i].position.yxz.toArray())
+            case "YZX": return this._indices.flatMap(i => this._vertices[i].position.yzx.toArray())
+            case "ZXY": return this._indices.flatMap(i => this._vertices[i].position.zxy.toArray())
+            case "ZYX": return this._indices.flatMap(i => this._vertices[i].position.zyx.toArray())
+            default: return this._indices.flatMap(i => this._vertices[i].position.xyz.toArray())
+        }
+
     }
 
     /////////////////////////////////////////////
