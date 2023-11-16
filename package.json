@@ -1,6 +1,6 @@
 {
   "name": "graphic-math",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "a library to deal with all mathematic need in computer graphic",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
