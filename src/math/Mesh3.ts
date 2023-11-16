@@ -104,6 +104,7 @@ export class Mesh3 {
      */
     applyMat4(mat: Mat4): this {
         this._vertices.forEach(v => v.applyMat4(mat));
+        this._wireframeVertices.forEach(w => w.forEach(p => p.applyMat4(mat)))
         return this;
     }
 
