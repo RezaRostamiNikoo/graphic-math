@@ -26,7 +26,7 @@ export class Mesh3 {
      * @returns 
      */
     private addVertex(vertex: Vertex3): number {
-        if (this._idVertices.get(vertex.id)) return this._idVertices.get(vertex.id);
+        // if (this._idVertices.get(vertex.id)) return this._idVertices.get(vertex.id);
         this._idVertices.set(vertex.id, ++this._lastIndex);
         this._vertices.push(vertex);
         return this._lastIndex;
@@ -100,7 +100,7 @@ export class Mesh3 {
      * @returns {Mesh3}
      */
     applyMat4(mat: Mat4): this {
-        this._vertices.forEach(v => v.applyMat4(mat));
+        this._vertices.forEach(v => v.applyMat4(mat))
         // this._wireframeVertices.forEach(w => w.forEach(p => p.applyMat4(mat)))
         return this;
     }
