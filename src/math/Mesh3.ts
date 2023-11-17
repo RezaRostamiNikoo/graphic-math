@@ -63,7 +63,11 @@ export class Mesh3 {
      * returns a copy of this mesh
      * @returns {Mesh3}
      */
-    clone(): Mesh3 { return new Mesh3(this._vertices.map(v => v.clone()), [...this._indices]); }
+    clone(): Mesh3 {
+        const result = new Mesh3(this._vertices.map(v => v.clone()), [...this._indices]);
+        this._wireframeVertices.forEach(wf => result.addWireFrame(wf))
+        return result
+    }
 
     /**
      * copys all the vertices and indices of the given mesh to the current mesh
@@ -73,6 +77,7 @@ export class Mesh3 {
     copy(mesh: Mesh3): this {
         this._vertices = mesh.clone()._vertices
         this._indices = [...this._indices];
+        mesh._wireframeVertices.forEach(wf => this.addWireFrame(wf))
         return this;
     }
 
@@ -104,7 +109,7 @@ export class Mesh3 {
      */
     applyMat4(mat: Mat4): this {
         this._vertices.forEach(v => v.applyMat4(mat));
-        this._wireframeVertices.forEach(w => w.forEach(p => p.applyMat4(mat)))
+        // this._wireframeVertices.forEach(w => w.forEach(p => p.applyMat4(mat)))
         return this;
     }
 
