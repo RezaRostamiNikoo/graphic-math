@@ -10,7 +10,6 @@ import { Vertex3 } from "./Vertex3";
 export class Mesh3 {
 
     private _vertices: Array<Vertex3> = [];
-    private _wireframeVertices: Array<Array<Vec3>> = []
     private _indices: Array<number> = [];
     private _lastIndex: number = -1;
     private _idVertices: Map<string, number> = new Map();
@@ -55,17 +54,12 @@ export class Mesh3 {
         return this;
     }
 
-    addWireFrame(wireFrame: Array<Vec3>) {
-        this._wireframeVertices.push(wireFrame)
-    }
-
     /**
      * returns a copy of this mesh
      * @returns {Mesh3}
      */
     clone(): Mesh3 {
         const result = new Mesh3(this._vertices.map(v => v.clone()), [...this._indices]);
-        this._wireframeVertices.forEach(wf => result.addWireFrame(wf))
         return result
     }
 
@@ -77,7 +71,6 @@ export class Mesh3 {
     copy(mesh: Mesh3): this {
         this._vertices = mesh.clone()._vertices
         this._indices = [...this._indices];
-        mesh._wireframeVertices.forEach(wf => this.addWireFrame(wf))
         return this;
     }
 
@@ -88,7 +81,6 @@ export class Mesh3 {
      */
     mergeOne(mesh: Mesh3): this {
         this.addTriangles(mesh._vertices, mesh._indices);
-        mesh.getWireframes().forEach(w => this.addWireFrame(w))
         return this;
     }
 
@@ -116,7 +108,6 @@ export class Mesh3 {
     toJson(): object {
         return {
             vertices: this._vertices.map(v => v.toJson()),
-            wireframes: this._wireframeVertices.map(v => v.map(p => p.toJson())),
             indices: this._indices
         }
     }
@@ -142,7 +133,6 @@ export class Mesh3 {
 
     }
 
-    getWireframes(): Array<Array<Vec3>> { return this._wireframeVertices }
 
     /////////////////////////////////////////////
     public static sidesFromTwoPolygons(p1: Polygon3, p2: Polygon3): Mesh3 {
@@ -158,7 +148,6 @@ export class Mesh3 {
                 ],
                 [0, 1, 2, 0, 2, 3]
             )
-            result.addWireFrame([p1.getPointAt(i).value, p2.getPointAt(i).value])
         }
         return result;
     }

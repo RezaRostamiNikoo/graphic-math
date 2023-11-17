@@ -72,7 +72,6 @@ export class Polygon3 {
 
     toMesh3(holes: Array<Polygon3> = []): Mesh3 {
         const result = new EarcutTriangulation3().generateMesh(this._points, holes.map(h => h._points));
-        result.addWireFrame([...this.points, this.points[0]])
         return result
     }
 
