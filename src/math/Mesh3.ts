@@ -1,21 +1,19 @@
-// import { Obj } from "../formats";
-// import { Face3, Mat4x4, Polygon3, Vertex3 } from ".";
+// import { Obj } from "../formats"
+// import { Face3, Mat4x4, Polygon3, Vertex3 } from "."
 
-import { Face3 } from "./Face3";
-import { Mat4 } from "./Mat4";
-import { Polygon3 } from "./Polygon3";
-import { Vec3 } from "./Vec3";
-import { Vertex3 } from "./Vertex3";
+import { Face3 } from "./Face3"
+import { Mat4 } from "./Mat4"
+import { Polygon3 } from "./Polygon3"
+import { Vec3 } from "./Vec3"
+import { Vertex3 } from "./Vertex3"
 
 export class Mesh3 {
 
-    private _vertices: Array<Vertex3> = [];
-    private _indices: Array<number> = [];
-    private _lastIndex: number = -1;
-    private _idVertices: Map<string, number> = new Map();
+    private _vertices: Array<Vertex3> = []
+    private _indices: Array<number> = []
 
     constructor(vertices: Array<Vertex3> = [], indices: Array<number> = []) {
-        this.addTriangles(vertices, indices);
+        this.addTriangles(vertices, indices)
     }
 
     /**
@@ -26,10 +24,8 @@ export class Mesh3 {
      * @returns 
      */
     private addVertex(vertex: Vertex3): number {
-        // if (this._idVertices.get(vertex.id)) return this._idVertices.get(vertex.id);
-        this._idVertices.set(vertex.id, ++this._lastIndex);
-        this._vertices.push(vertex);
-        return this._lastIndex;
+        this._vertices.push(vertex)
+        return this._vertices.length - 1
     }
 
     /**
@@ -40,18 +36,18 @@ export class Mesh3 {
      * @returns {Mesh3}
      */
     addTriangles(vertices: Array<Vertex3>, indices: Array<number>): this {
-        const modifiedIndices = indices.map(v => -1);
+        const modifiedIndices = indices.map(v => -1)
         for (let i = 0; i < vertices.length; i++) {
-            const vertex = vertices[i];
-            let nextIndex = this.addVertex(vertex);
-            const indicesToBeChanged: Array<number> = [];
-            indices.forEach((v, ii) => { if (v === i) indicesToBeChanged.push(ii); });
+            const vertex = vertices[i]
+            let nextIndex = this.addVertex(vertex)
+            const indicesToBeChanged: Array<number> = []
+            indices.forEach((v, ii) => { if (v === i) indicesToBeChanged.push(ii) })
             indicesToBeChanged.forEach(v => {
-                modifiedIndices[v] = nextIndex;
-            });
+                modifiedIndices[v] = nextIndex
+            })
         }
-        this._indices.push(...modifiedIndices);
-        return this;
+        this._indices.push(...modifiedIndices)
+        return this
     }
 
     /**
@@ -59,7 +55,7 @@ export class Mesh3 {
      * @returns {Mesh3}
      */
     clone(): Mesh3 {
-        const result = new Mesh3(this._vertices.map(v => v.clone()), [...this._indices]);
+        const result = new Mesh3(this._vertices.map(v => v.clone()), [...this._indices])
         return result
     }
 
@@ -70,8 +66,8 @@ export class Mesh3 {
      */
     copy(mesh: Mesh3): this {
         this._vertices = mesh.clone()._vertices
-        this._indices = [...this._indices];
-        return this;
+        this._indices = [...this._indices]
+        return this
     }
 
     /**
@@ -80,8 +76,8 @@ export class Mesh3 {
      * @returns {Mesh3}
      */
     mergeOne(mesh: Mesh3): this {
-        this.addTriangles(mesh._vertices, mesh._indices);
-        return this;
+        this.addTriangles(mesh._vertices, mesh._indices)
+        return this
     }
 
     /**
@@ -90,8 +86,8 @@ export class Mesh3 {
      * @returns {Mesh3}
      */
     mergeMany(meshs: Array<Mesh3>): this {
-        meshs.forEach(m => this.mergeOne(m));
-        return this;
+        meshs.forEach(m => this.mergeOne(m))
+        return this
     }
 
     /**
@@ -101,8 +97,7 @@ export class Mesh3 {
      */
     applyMat4(mat: Mat4): this {
         this._vertices.forEach(v => v.applyMat4(mat))
-        // this._wireframeVertices.forEach(w => w.forEach(p => p.applyMat4(mat)))
-        return this;
+        return this
     }
 
     toJson(): object {
@@ -113,7 +108,7 @@ export class Mesh3 {
     }
 
     // toObj(): Obj {
-    //     return new Obj(this.vertices, this.indices);
+    //     return new Obj(this.vertices, this.indices)
     // }
 
     /**
@@ -133,11 +128,10 @@ export class Mesh3 {
 
     }
 
-
     /////////////////////////////////////////////
     public static sidesFromTwoPolygons(p1: Polygon3, p2: Polygon3): Mesh3 {
-        if (!p1.canMakeVolumeWith(p2)) return null;
-        const result = new Mesh3();
+        if (!p1.canMakeVolumeWith(p2)) return null
+        const result = new Mesh3()
         for (let i = 0; i < p1.points.length; i++) {
             result.addTriangles(
                 [
@@ -149,28 +143,28 @@ export class Mesh3 {
                 [0, 1, 2, 0, 2, 3]
             )
         }
-        return result;
+        return result
     }
 
     public static fromTwoFaces(f1: Face3, f2: Face3): Mesh3 {
-        if (!f1.canMakeVolumeWith(f2)) return null;
-        const result = new Mesh3();
-        result.mergeOne(f1.toMesh3());
-        result.mergeOne(f2.toMesh3());
-        result.mergeOne(Mesh3.sidesFromTwoFaces(f1, f2));
-        return result;
+        if (!f1.canMakeVolumeWith(f2)) return null
+        const result = new Mesh3()
+        result.mergeOne(f1.toMesh3())
+        result.mergeOne(f2.toMesh3())
+        result.mergeOne(Mesh3.sidesFromTwoFaces(f1, f2))
+        return result
     }
 
     public static sidesFromTwoFaces(f1: Face3, f2: Face3): Mesh3 {
-        if (!f1.canMakeVolumeWith(f2)) return null;
-        const result = new Mesh3();
+        if (!f1.canMakeVolumeWith(f2)) return null
+        const result = new Mesh3()
         for (let ip = 0; ip < f1.polygons.length; ip++) {
-            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.polygons[ip], f2.polygons[ip]));
+            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.polygons[ip], f2.polygons[ip]))
         }
         for (let ih = 0; ih < f1.holes.length; ih++) {
-            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.holes[ih], f2.holes[ih]));
+            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.holes[ih], f2.holes[ih]))
         }
-        return result;
+        return result
     }
 
     /**
@@ -181,7 +175,11 @@ export class Mesh3 {
      * @returns {Mesh3}
      */
     public static extrudeFace(face: Face3, thickness: number, direction?: Vec3): Mesh3 {
-        const faceB = face.clone().translate(face.normal.multiplyScalar(thickness));
-        return Mesh3.fromTwoFaces(face, faceB);
+        const faceB = face.clone().translate(
+            direction
+                ? direction.normalize().multiplyScalar(thickness)
+                : face.normal.multiplyScalar(thickness)
+        )
+        return Mesh3.fromTwoFaces(face, faceB)
     }
 }
