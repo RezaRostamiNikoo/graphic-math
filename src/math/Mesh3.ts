@@ -135,10 +135,10 @@ export class Mesh3 {
         for (let i = 0; i < p1.points.length; i++) {
             result.addTriangles(
                 [
-                    new Vertex3(p1.getPointAt(i).value),
-                    new Vertex3(p1.getPointAt(i).next.value),
-                    new Vertex3(p2.getPointAt(i).next.value),
-                    new Vertex3(p2.getPointAt(i).value)
+                    new Vertex3(p1.getPointAt(i).value.clone()),
+                    new Vertex3(p1.getPointAt(i).next.value.clone()),
+                    new Vertex3(p2.getPointAt(i).next.value.clone()),
+                    new Vertex3(p2.getPointAt(i).value.clone())
                 ],
                 [0, 1, 2, 0, 2, 3]
             )
@@ -149,9 +149,9 @@ export class Mesh3 {
     public static fromTwoFaces(f1: Face3, f2: Face3): Mesh3 {
         if (!f1.canMakeVolumeWith(f2)) return null
         const result = new Mesh3()
-        result.mergeOne(f1.toMesh3())
-        result.mergeOne(f2.toMesh3())
-        result.mergeOne(Mesh3.sidesFromTwoFaces(f1, f2))
+        result.mergeOne(f1.clone().toMesh3())
+        result.mergeOne(f2.clone().toMesh3())
+        result.mergeOne(Mesh3.sidesFromTwoFaces(f1.clone(), f2.clone()))
         return result
     }
 
@@ -159,10 +159,10 @@ export class Mesh3 {
         if (!f1.canMakeVolumeWith(f2)) return null
         const result = new Mesh3()
         for (let ip = 0; ip < f1.polygons.length; ip++) {
-            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.polygons[ip], f2.polygons[ip]))
+            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.polygons[ip].clone(), f2.polygons[ip].clone()))
         }
         for (let ih = 0; ih < f1.holes.length; ih++) {
-            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.holes[ih], f2.holes[ih]))
+            result.mergeOne(Mesh3.sidesFromTwoPolygons(f1.holes[ih].clone(), f2.holes[ih].clone()))
         }
         return result
     }

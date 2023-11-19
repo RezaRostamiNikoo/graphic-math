@@ -5,8 +5,8 @@ export class Vertex2 {
     normal: Vec2;
 
     constructor(point: Vec2, normal: Vec2 = new Vec2(1, 0)) {
-        this.position = point;
-        this.normal = normal.normalize();
+        this.position = point.clone();
+        this.normal = normal.clone().normalize();
     }
 
     add(v: Vec2): Vertex2 {
