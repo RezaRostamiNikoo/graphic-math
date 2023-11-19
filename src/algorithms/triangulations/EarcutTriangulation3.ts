@@ -25,7 +25,7 @@ export default class EarcutTriangulation3 implements ITriangulation3 {
         const result = new Mesh3(
             [
                 ...vertices.map((val, i) => new Vertex3(val.value.clone())),
-                ...holes.flat().map((vals, i) => vals.map(val => new Vertex3(val.value.clone())))
+                ...holes.flatMap((vals, i) => vals.map(val => new Vertex3(val.value.clone())))
             ],
             triangles
         );
