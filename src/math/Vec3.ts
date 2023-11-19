@@ -170,7 +170,7 @@ export class Vec3 {
      * return a reverse vector of the main vector
      * @returns {Vec3} 
      */
-    reverse = (): Vec3 => this.multiplyScalar(-1);
+    reverse(): this { this.multiplyScalar(-1); return this }
 
     /**
      * create a copy of the vector

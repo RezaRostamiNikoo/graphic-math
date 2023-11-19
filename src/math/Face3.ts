@@ -37,7 +37,7 @@ export class Face3 {
      * @returns {Face3}
      */
     addPolygons(polygons: Array<Polygon3>): this {
-        polygons.forEach(p => this.addPolygon(p));
+        polygons.forEach(p => this.addPolygon(p.clone()));
         return this;
     }
 

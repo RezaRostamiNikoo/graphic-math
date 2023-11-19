@@ -8,7 +8,7 @@ export class Polygon3 {
     constructor(points: Array<Vec3>) {
         // TODO: check if next check is necessary 
         if (points.length < 3) throw new Error("Polygon3.constructor | length of points should be at lest three")
-        this._points = new CircularLinkedList(points)
+        this._points = new CircularLinkedList(points.map(p => p.clone()))
     }
 
     /** returns the polygon's points as Array */
@@ -30,8 +30,8 @@ export class Polygon3 {
      * @returns {Polygon3}
      */
     add(point: Vec3, index?: number): this {
-        if (index) this._points.insertAt(point, index)
-        else this._points.add(point)
+        if (index) this._points.insertAt(point.clone(), index)
+        else this._points.add(point.clone())
         return this
     }
 
@@ -56,7 +56,7 @@ export class Polygon3 {
     copy(polygon: Polygon3): Polygon3 {
         this.clear()
         const _this = this;
-        polygon.points.map(v => v.clone()).forEach(p => _this.add(p));
+        polygon.points.forEach(p => _this.add(p.clone()));
         return this;
     }
 
