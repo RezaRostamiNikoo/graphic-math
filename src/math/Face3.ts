@@ -127,6 +127,7 @@ export class Face3 {
     translate(vec: Vec3): this;
     translate(dx: number | Vec3, dy?: number, dz?: number): this {
         this.polygons.forEach(p => p.applyMat4(Mat4.makeTranslation(dx as number, dy, dz)))
+        this.holes.forEach(p => p.applyMat4(Mat4.makeTranslation(dx as number, dy, dz)))
         return this
     }
 
