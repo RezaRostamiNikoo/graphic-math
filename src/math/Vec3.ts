@@ -629,9 +629,9 @@ export class Vec3 {
      * @returns rotated Vec3
      */
     angleLerp(v: Vec3, t: number): Vec3 {
-        t = Math.max(0, Math.min(t, 0, 1))
+        t = Math.max(0, Math.min(t, 1))
         const x = this.clone().normalize();
-        const z = x.cross(v).normalize();
+        const z = x.cross(v.clone()).normalize();
         const y = z.cross(x).normalize();
         return this.applyMat4(Mat4.makeRotationAxis(z, x.angleTo(v) * t));
     }
