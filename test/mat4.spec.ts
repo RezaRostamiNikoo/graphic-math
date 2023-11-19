@@ -1,4 +1,4 @@
-import { Mat4, Mat3, gmUtils } from "../src"
+import { Mat4, Mat3, gmUtils, Mesh3, Vec3, Vertex3 } from "../src"
 
 const { f } = gmUtils
 
@@ -41,6 +41,60 @@ describe("Tests Mat4", () => {
         expect(m.scale(2, 3, 4).toArray()).toEqual([2, 6, 12, 4, 10, 18, 28, 8, 18, 30, 44, 12, 26, 42, 60, 16])
         expect(m.multiplyTo(Mat4.makeScale(1 / 2, 1 / 3, 1 / 4)).toArray())
             .toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+
+    })
+
+    test('Apply Mat 4', () => {
+        const obj = {
+            vertices: [
+                { "x": -20, "y": 0, "z": -20 },
+                { "x": 20, "y": 0, "z": -20 },
+                { "x": 20, "y": 0, "z": 20 },
+                { "x": -20, "y": 0, "z": 20 },
+                { "x": -20, "y": -15, "z": -20 },
+                { "x": 20, "y": -15, "z": -20 },
+                { "x": 20, "y": -15, "z": 20 },
+                { "x": -20, "y": -15, "z": 20 },
+                { "x": -20, "y": 0, "z": -20 },
+                { "x": 20, "y": 0, "z": -20 },
+                { "x": 20, "y": -15, "z": -20 },
+                { "x": -20, "y": -15, "z": -20 },
+                { "x": 20, "y": 0, "z": -20 },
+                { "x": 20, "y": 0, "z": 20 },
+                { "x": 20, "y": -15, "z": 20 },
+                { "x": 20, "y": -15, "z": -20 },
+                { "x": 20, "y": 0, "z": 20 },
+                { "x": -20, "y": 0, "z": 20 },
+                { "x": -20, "y": -15, "z": 20 },
+                { "x": 20, "y": -15, "z": 20 },
+                { "x": -20, "y": 0, "z": 20 },
+                { "x": -20, "y": 0, "z": -20 },
+                { "x": -20, "y": -15, "z": -20 },
+                { "x": -20, "y": -15, "z": 20 }
+            ],
+            indices: [
+                2, 3, 0,
+                0, 1, 2,
+                6, 7, 4,
+                4, 5, 6,
+                8, 9, 10,
+                8, 10, 11,
+                12, 13, 14,
+                12, 14, 15,
+                16, 17, 18,
+                16, 18, 19,
+                20, 21, 22,
+                20, 22, 23
+            ]
+        }
+
+        const mesh = new Mesh3(
+            obj.vertices.map(v => new Vertex3(new Vec3(v.x, v.y, v.z))),
+            obj.indices
+        )
+
+        const m = Mat4.makeTranslation(0, 50, 0)
+        console.log(JSON.stringify(mesh.applyMat4(m).toJson()))
 
     })
 

@@ -223,7 +223,7 @@ export class Vec3 {
     }
 
     /**
-     * subtracts given vector from current vector
+     * subtracts given vector from current vector - direction of the vector will be from given "vec" to this vector
      * @example
      *  this - vec
      * @param {Vec3} vec 
